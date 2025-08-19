@@ -12,7 +12,7 @@ export default function Landing() {
           </div>
           <span className="text-xl sm:text-2xl font-black text-white">Sandbox</span>
         </div>
-        <Link href="/parent" className="bg-white/20 backdrop-blur-sm text-white px-3 py-2 sm:px-4 sm:py-2 rounded-full hover:bg-white/30 transition-all text-sm">
+        <Link href="/parent-app" className="bg-white/20 backdrop-blur-sm text-white px-3 py-2 sm:px-4 sm:py-2 rounded-full hover:bg-white/30 transition-all text-sm">
           Parent
         </Link>
       </nav>
@@ -125,7 +125,7 @@ export default function Landing() {
             <Link href="/onboarding" className="bg-white text-purple-600 px-6 py-3 sm:px-8 sm:py-4 rounded-2xl font-bold text-base sm:text-lg hover:bg-gray-100 transition-all shadow-xl">
               Start Learning
             </Link>
-            <Link href="/parent" className="bg-purple-500 text-white px-6 py-3 sm:px-8 sm:py-4 rounded-2xl font-bold text-base sm:text-lg hover:bg-purple-600 transition-all shadow-xl">
+            <Link href="/parent-app" className="bg-purple-500 text-white px-6 py-3 sm:px-8 sm:py-4 rounded-2xl font-bold text-base sm:text-lg hover:bg-purple-600 transition-all shadow-xl">
               Parent Dashboard
             </Link>
           </div>

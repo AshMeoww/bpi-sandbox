@@ -1,6 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { TaskStore, Task } from "../../../lib/taskStore";
 
 type Transaction = {
   id: number;
@@ -25,10 +26,18 @@ export default function Dashboard() {
     { id: 5, name: "Helper", icon: "🤝", earned: true, description: "Completed chores for family" },
     { id: 6, name: "Learner", icon: "📚", earned: false, description: "Complete all learning cards" },
   ]);
-  const [assignedTasks, setAssignedTasks] = useState([
-    { id: 1, title: "Clean your room", reward: 25, badge: "Helper", status: "pending", assignedDate: "2024-01-16", isNew: true },
-    { id: 2, title: "Help with groceries", reward: 20, badge: "", status: "completed", assignedDate: "2024-01-15", isNew: false },
-  ]);
+  const [assignedTasks, setAssignedTasks] = useState<Task[]>([]);
+
+  useEffect(() => {
+    setAssignedTasks(TaskStore.getTasks());
+    
+    const handleTasksUpdate = () => {
+      setAssignedTasks(TaskStore.getTasks());
+    };
+    
+    window.addEventListener('tasks-updated', handleTasksUpdate);
+    return () => window.removeEventListener('tasks-updated', handleTasksUpdate);
+  }, []);
   const [transactions, setTransactions] = useState<Transaction[]>([
     { id: 1, type: "deposit", amount: 20, description: "Allowance", date: "2024-01-15" },
     { id: 2, type: "deposit", amount: 30, description: "Birthday money", date: "2024-01-10" },
@@ -87,24 +96,23 @@ export default function Dashboard() {
     }
 
     // Mark task as completed
-    setAssignedTasks(prev => prev.map(t => 
-      t.id === taskId ? { ...t, status: 'completed' as const, isNew: false } : t
-    ));
+    TaskStore.updateTask(taskId, { status: 'completed', isNew: false });
+    setAssignedTasks(TaskStore.getTasks());
   };
 
   const pendingTasks = assignedTasks.filter(t => t.status === 'pending');
   const newTasksCount = assignedTasks.filter(t => t.isNew).length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400 p-4">
-      <div className="max-w-md mx-auto sm:max-w-6xl">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400 pb-20">
+      <div className="max-w-md mx-auto p-4">
         <header className="text-center mb-6 sm:mb-8">
           <div className="flex justify-between items-center mb-4 sm:mb-6">
             <Link href="/" className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
               {/* [LOGO_PLACEHOLDER] */}
               <div className="w-6 h-6 sm:w-8 sm:h-8 bg-purple-500 rounded-full"></div>
             </Link>
-            <Link href="/parent" className="bg-white/20 backdrop-blur-sm text-white px-3 py-2 sm:px-4 sm:py-2 rounded-full hover:bg-white/30 transition-all text-xs sm:text-sm font-medium">
+            <Link href="/parent-app" className="bg-white/20 backdrop-blur-sm text-white px-3 py-2 sm:px-4 sm:py-2 rounded-full hover:bg-white/30 transition-all text-xs sm:text-sm font-medium">
               Parent
             </Link>
           </div>
@@ -208,17 +216,17 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Activities - Tall */}
+          {/* Quick Actions - Tall */}
           <div className="row-span-2 bg-white rounded-2xl shadow-xl p-4">
-            <h3 className="text-lg font-bold text-gray-800 mb-4">Activities</h3>
+            <h3 className="text-lg font-bold text-gray-800 mb-4">Quick Actions</h3>
             <div className="space-y-3">
-              <Link href="/tasks" className="w-full bg-gradient-to-r from-green-400 to-green-500 text-white py-3 rounded-xl font-bold text-sm shadow-lg flex items-center justify-center space-x-2">
-                <span>🎯</span>
-                <span>Earn</span>
-              </Link>
-              <Link href="/learn" className="w-full bg-gradient-to-r from-orange-400 to-orange-500 text-white py-3 rounded-xl font-bold text-sm shadow-lg flex items-center justify-center space-x-2">
+              <Link href="/kid/learn" className="w-full bg-gradient-to-r from-orange-400 to-orange-500 text-white py-3 rounded-xl font-bold text-sm shadow-lg flex items-center justify-center space-x-2">
                 <span>📚</span>
                 <span>Learn</span>
+              </Link>
+              <Link href="/kid/tasks" className="w-full bg-gradient-to-r from-green-400 to-green-500 text-white py-3 rounded-xl font-bold text-sm shadow-lg flex items-center justify-center space-x-2">
+                <span>💰</span>
+                <span>Earn</span>
               </Link>
             </div>
           </div>
@@ -300,6 +308,28 @@ export default function Dashboard() {
               </button>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Bottom Navigation */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+        <div className="flex justify-around items-center max-w-md mx-auto">
+          <div className="flex flex-col items-center py-2 px-3 rounded-xl bg-purple-100">
+            <div className="w-6 h-6 bg-purple-500 rounded mb-1"></div>
+            <span className="text-xs font-bold text-purple-600">Home</span>
+          </div>
+          <Link href="/kid/tasks" className="flex flex-col items-center py-2 px-3 rounded-xl hover:bg-gray-100 transition-colors">
+            <div className="w-6 h-6 bg-gray-400 rounded mb-1"></div>
+            <span className="text-xs font-medium text-gray-600">Tasks</span>
+          </Link>
+          <Link href="/kid/wishlist" className="flex flex-col items-center py-2 px-3 rounded-xl hover:bg-gray-100 transition-colors">
+            <div className="w-6 h-6 bg-gray-400 rounded mb-1"></div>
+            <span className="text-xs font-medium text-gray-600">Wishlist</span>
+          </Link>
+          <Link href="/kid/profile" className="flex flex-col items-center py-2 px-3 rounded-xl hover:bg-gray-100 transition-colors">
+            <div className="w-6 h-6 bg-gray-400 rounded-full mb-1"></div>
+            <span className="text-xs font-medium text-gray-600">Profile</span>
+          </Link>
         </div>
       </div>
     </div>

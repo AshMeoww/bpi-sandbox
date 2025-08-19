@@ -1,6 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { TaskStore, Task as AssignedTask } from "../../../lib/taskStore";
 
 type Task = {
   id: number;
@@ -13,6 +14,7 @@ type Task = {
 };
 
 export default function Tasks() {
+  const [assignedTasks, setAssignedTasks] = useState<AssignedTask[]>([]);
   const [tasks, setTasks] = useState<Task[]>([
     { id: 1, type: "chore", title: "Clean Your Room", description: "Make your bed and organize your toys", reward: 25, completed: false, icon: "🛏️" },
     { id: 2, type: "chore", title: "Help with Dishes", description: "Help wash or dry the dishes after dinner", reward: 20, completed: true, icon: "🍽️" },
@@ -58,15 +60,27 @@ export default function Tasks() {
     }
   };
 
+  useEffect(() => {
+    setAssignedTasks(TaskStore.getTasks());
+    
+    const handleTasksUpdate = () => {
+      setAssignedTasks(TaskStore.getTasks());
+    };
+    
+    window.addEventListener('tasks-updated', handleTasksUpdate);
+    return () => window.removeEventListener('tasks-updated', handleTasksUpdate);
+  }, []);
+
   const totalEarned = tasks.filter(t => t.completed).reduce((sum, t) => sum + t.reward, 0);
   const availableTasks = tasks.filter(t => !t.completed);
+  const pendingAssignedTasks = assignedTasks.filter(t => t.status === 'pending');
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-400 via-blue-400 to-purple-400 p-4">
-      <div className="max-w-md mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-green-400 via-blue-400 to-purple-400 pb-20">
+      <div className="max-w-md mx-auto p-4">
         <header className="text-center mb-6">
           <div className="flex justify-between items-center mb-4">
-            <Link href="/dashboard" className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg">
+            <Link href="/" className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg">
               <div className="w-6 h-6 bg-green-500 rounded-full"></div>
             </Link>
             <div className="bg-white/20 backdrop-blur-sm text-white px-3 py-2 rounded-full text-sm font-bold">
@@ -81,6 +95,45 @@ export default function Tasks() {
 
         {!selectedTask ? (
           <div className="space-y-4">
+            {/* Assigned Tasks from Parent */}
+            {pendingAssignedTasks.length > 0 && (
+              <div className="bg-white rounded-2xl shadow-xl p-4 mb-4">
+                <h3 className="text-lg font-bold text-gray-800 mb-3">Tasks from Parent</h3>
+                <div className="space-y-3">
+                  {pendingAssignedTasks.map((task) => (
+                    <div key={task.id} className="bg-yellow-50 border-2 border-yellow-200 rounded-xl p-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-3">
+                          <div className="text-3xl">👨‍👩‍👧‍👦</div>
+                          <div>
+                            <h3 className="font-bold text-gray-800">{task.title}</h3>
+                            <p className="text-sm text-gray-600">Assigned by parent</p>
+                            <div className="flex items-center space-x-2 mt-1">
+                              <span className="px-2 py-1 rounded-full text-xs font-bold bg-purple-100 text-purple-600">
+                                PARENT TASK
+                              </span>
+                              <span className="text-green-600 font-bold">₱{task.reward}</span>
+                              {task.badge && <span className="text-blue-600 text-xs">+ {task.badge} badge</span>}
+                            </div>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => {
+                            TaskStore.updateTask(task.id, { status: 'completed', isNew: false });
+                            setAssignedTasks(TaskStore.getTasks());
+                          }}
+                          className="bg-green-500 text-white px-4 py-2 rounded-xl font-bold text-sm hover:bg-green-600 transition-all"
+                        >
+                          Complete
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {/* Regular Tasks */}
             {availableTasks.map((task) => (
               <div key={task.id} className="bg-white rounded-2xl shadow-xl p-4">
                 <div className="flex items-center justify-between">
@@ -116,7 +169,7 @@ export default function Tasks() {
                 <div className="text-6xl mb-4">🎉</div>
                 <h3 className="text-xl font-bold text-gray-800 mb-2">All Done!</h3>
                 <p className="text-gray-600 mb-4">You've completed all available tasks. Great job!</p>
-                <Link href="/dashboard" className="bg-purple-500 text-white px-6 py-3 rounded-xl font-bold">
+                <Link href="/kid/dashboard" className="bg-purple-500 text-white px-6 py-3 rounded-xl font-bold">
                   Back to Dashboard
                 </Link>
               </div>
@@ -186,6 +239,28 @@ export default function Tasks() {
             )}
           </div>
         )}
+      </div>
+
+      {/* Bottom Navigation */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+        <div className="flex justify-around items-center max-w-md mx-auto">
+          <Link href="/kid/dashboard" className="flex flex-col items-center py-2 px-3 rounded-xl hover:bg-gray-100 transition-colors">
+            <div className="w-6 h-6 bg-gray-400 rounded mb-1"></div>
+            <span className="text-xs font-medium text-gray-600">Home</span>
+          </Link>
+          <div className="flex flex-col items-center py-2 px-3 rounded-xl bg-green-100">
+            <div className="w-6 h-6 bg-green-500 rounded mb-1"></div>
+            <span className="text-xs font-bold text-green-600">Tasks</span>
+          </div>
+          <Link href="/kid/wishlist" className="flex flex-col items-center py-2 px-3 rounded-xl hover:bg-gray-100 transition-colors">
+            <div className="w-6 h-6 bg-gray-400 rounded mb-1"></div>
+            <span className="text-xs font-medium text-gray-600">Wishlist</span>
+          </Link>
+          <Link href="/kid/profile" className="flex flex-col items-center py-2 px-3 rounded-xl hover:bg-gray-100 transition-colors">
+            <div className="w-6 h-6 bg-gray-400 rounded-full mb-1"></div>
+            <span className="text-xs font-medium text-gray-600">Profile</span>
+          </Link>
+        </div>
       </div>
     </div>
   );

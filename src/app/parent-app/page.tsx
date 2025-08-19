@@ -1,6 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { TaskStore, Task } from "../../lib/taskStore";
 
 type Transaction = {
   id: number;
@@ -30,10 +31,11 @@ export default function ParentDashboard() {
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [newTaskReward, setNewTaskReward] = useState("");
   const [newTaskBadge, setNewTaskBadge] = useState("");
-  const [assignedTasks, setAssignedTasks] = useState([
-    { id: 1, title: "Clean your room", reward: 25, badge: "Helper", status: "pending", assignedDate: "2024-01-16" },
-    { id: 2, title: "Help with groceries", reward: 20, badge: "", status: "completed", assignedDate: "2024-01-15" },
-  ]);
+  const [assignedTasks, setAssignedTasks] = useState<Task[]>([]);
+
+  useEffect(() => {
+    setAssignedTasks(TaskStore.getTasks());
+  }, []);
 
   const totalSpentThisWeek = transactions
     .filter(t => t.type === "withdrawal" && new Date(t.date) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000))
@@ -42,31 +44,28 @@ export default function ParentDashboard() {
   const handleCreateTask = () => {
     if (!newTaskTitle || !newTaskReward) return;
     
-    const newTask = {
-      id: Date.now(),
+    TaskStore.addTask({
       title: newTaskTitle,
       reward: Number(newTaskReward),
-      badge: newTaskBadge,
-      status: "pending" as const,
-      assignedDate: new Date().toISOString().split('T')[0]
-    };
+      badge: newTaskBadge
+    });
     
-    setAssignedTasks([newTask, ...assignedTasks]);
+    setAssignedTasks(TaskStore.getTasks());
     setNewTaskTitle("");
     setNewTaskReward("");
     setNewTaskBadge("");
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 p-4">
-      <div className="max-w-md mx-auto sm:max-w-7xl">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 p-4 pb-20">
+      <div className="max-w-md mx-auto">
         <header className="mb-6 sm:mb-8">
           <div className="flex justify-between items-center mb-4 sm:mb-6">
             <Link href="/" className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center">
               {/* [PARENT_DASHBOARD_ICON_PLACEHOLDER] */}
               <div className="w-6 h-6 sm:w-8 sm:h-8 bg-blue-600 rounded-full"></div>
             </Link>
-            <Link href="/dashboard" className="bg-white/20 backdrop-blur-sm text-white px-3 py-2 sm:px-6 sm:py-3 rounded-xl sm:rounded-2xl hover:bg-white/30 transition-all font-medium text-sm sm:text-base">
+            <Link href="/kid/dashboard" className="bg-white/20 backdrop-blur-sm text-white px-3 py-2 sm:px-6 sm:py-3 rounded-xl sm:rounded-2xl hover:bg-white/30 transition-all font-medium text-sm sm:text-base">
               Kid's View
             </Link>
           </div>
@@ -237,6 +236,30 @@ export default function ParentDashboard() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Navigation */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+        <div className="max-w-md mx-auto">
+          <div className="flex justify-around items-center">
+            <Link href="/parent-app" className="flex flex-col items-center py-2 px-3 text-purple-600">
+              <div className="w-6 h-6 bg-purple-600 rounded-lg mb-1"></div>
+              <span className="text-xs font-bold">Dashboard</span>
+            </Link>
+            <Link href="/parent-app/tasks" className="flex flex-col items-center py-2 px-3 text-gray-400">
+              <div className="w-6 h-6 bg-gray-400 rounded-lg mb-1"></div>
+              <span className="text-xs font-medium">Tasks</span>
+            </Link>
+            <Link href="/parent-app/settings" className="flex flex-col items-center py-2 px-3 text-gray-400">
+              <div className="w-6 h-6 bg-gray-400 rounded-lg mb-1"></div>
+              <span className="text-xs font-medium">Settings</span>
+            </Link>
+            <Link href="/parent-app/profile" className="flex flex-col items-center py-2 px-3 text-gray-400">
+              <div className="w-6 h-6 bg-gray-400 rounded-full mb-1"></div>
+              <span className="text-xs font-medium">Profile</span>
+            </Link>
           </div>
         </div>
       </div>

@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BPI Sandbox - Financial Learning App
 
-## Getting Started
+## Project Structure
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+src/
+├── app/
+│   ├── kid/                    # Kid-focused pages
+│   │   ├── dashboard/          # Kid's main dashboard
+│   │   ├── tasks/              # Task completion interface
+│   │   ├── wishlist/           # Savings goals and wishlist
+│   │   ├── profile/            # Kid's profile and activity summary
+│   │   └── learn/              # Learning cards and financial education
+│   ├── parent-app/             # Parent-focused pages
+│   │   ├── page.tsx            # Parent dashboard
+│   │   └── profile/            # Parent profile and reporting
+│   ├── onboarding/             # Initial setup flow
+│   ├── page.tsx                # Landing page
+│   └── layout.tsx              # Root layout
+├── lib/
+│   └── taskStore.ts            # Shared task management store
+└── components/                 # Reusable components (future)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Development Guidelines
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Kid Interface (`/kid/*`)
+- Mobile-first design with bottom navigation
+- Gamified experience with badges and levels
+- Real-time task updates from parents
+- Educational content and interactive learning
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Parent Interface (`/parent-app/*`)
+- Task assignment and monitoring
+- Child activity oversight
+- Spending limits and controls
+- Progress reporting
 
-## Learn More
+### Shared Components
+- `taskStore.ts` - Real-time task synchronization between parent and kid interfaces
+- Uses localStorage for persistence and custom events for real-time updates
 
-To learn more about Next.js, take a look at the following resources:
+## Key Features
+- **Dual Interface**: Separate optimized experiences for kids and parents
+- **Real-time Task Delegation**: Parents assign tasks that instantly appear on kid's dashboard
+- **Gamification**: Badge system, XP levels, and progress tracking
+- **Financial Education**: Learning cards and interactive quizzes
+- **Mobile-First**: Optimized for mobile devices with touch-friendly interfaces
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Routes
+- `/` - Landing page
+- `/kid/dashboard` - Kid's main interface
+- `/kid/tasks` - Task completion
+- `/kid/wishlist` - Savings goals
+- `/kid/profile` - Activity summary
+- `/parent-app` - Parent dashboard
+- `/parent-app/profile` - Parent reporting

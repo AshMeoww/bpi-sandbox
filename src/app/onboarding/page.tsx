@@ -191,7 +191,7 @@ export default function Onboarding() {
                 <div className="text-4xl mb-2">{avatar}</div>
               </div>
               <Link
-                href="/parent"
+                href="/parent-app"
                 className="w-full bg-blue-500 text-white py-3 rounded-xl font-bold inline-block text-center"
               >
                 Go to Parent Dashboard
@@ -235,7 +235,7 @@ export default function Onboarding() {
                 className="w-full p-3 border-2 border-gray-200 rounded-xl text-center font-bold text-lg focus:border-purple-400 focus:outline-none mb-6 text-black"
               />
               <Link
-                href="/dashboard"
+                href="/kid/dashboard"
                 className="w-full bg-purple-500 text-white py-3 rounded-xl font-bold inline-block text-center"
               >
                 Start My Journey!
@@ -257,7 +257,7 @@ export default function Onboarding() {
                 </p>
               </div>
               <Link
-                href="/dashboard"
+                href="/kid/dashboard"
                 className="w-full bg-purple-500 text-white py-3 rounded-xl font-bold inline-block text-center"
               >
                 Start My Journey!
