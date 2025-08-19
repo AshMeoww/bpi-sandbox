@@ -33,7 +33,11 @@ export default function Dashboard() {
     { id: 1, type: "deposit", amount: 20, description: "Allowance", date: "2024-01-15" },
     { id: 2, type: "deposit", amount: 30, description: "Birthday money", date: "2024-01-10" },
   ]);
-  const [savingsGoal] = useState({ target: 100, current: balance });
+  const [wishlist] = useState([
+    { id: 1, item: "New Bike", price: 2500, saved: balance, icon: "🚲" },
+    { id: 2, item: "Video Game", price: 1200, saved: 0, icon: "🎮" },
+    { id: 3, item: "Art Supplies", price: 800, saved: 0, icon: "🎨" },
+  ]);
 
   const handleTransaction = (type: "deposit" | "withdrawal") => {
     const value = parseFloat(amount);
@@ -174,21 +178,33 @@ export default function Dashboard() {
             <div className="text-xs text-green-700">Available</div>
           </div>
 
-          {/* Savings Goal - Wide */}
+          {/* Wishlist - Wide */}
           <div className="col-span-2 bg-white rounded-2xl shadow-xl p-4">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-lg font-bold text-gray-800">Savings Goal</h3>
-              <div className="text-xl font-bold text-blue-600">{Math.round((savingsGoal.current / savingsGoal.target) * 100)}%</div>
+              <h3 className="text-lg font-bold text-gray-800">My Wishlist</h3>
+              <div className="text-sm text-gray-600">{wishlist.length} items</div>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-              <div 
-                className="bg-gradient-to-r from-blue-500 to-purple-500 h-3 rounded-full transition-all duration-500"
-                style={{ width: `${(savingsGoal.current / savingsGoal.target) * 100}%` }}
-              ></div>
-            </div>
-            <div className="flex justify-between text-xs text-gray-600 mt-2">
-              <span>₱{savingsGoal.current}</span>
-              <span>₱{savingsGoal.target}</span>
+            <div className="space-y-2">
+              {wishlist.slice(0, 2).map((item) => (
+                <div key={item.id} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-lg">{item.icon}</span>
+                    <div>
+                      <div className="text-sm font-bold text-gray-800">{item.item}</div>
+                      <div className="text-xs text-gray-600">₱{item.price}</div>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-xs font-bold text-blue-600">{Math.round((item.saved / item.price) * 100)}%</div>
+                    <div className="w-16 bg-gray-200 rounded-full h-1">
+                      <div 
+                        className="bg-blue-500 h-1 rounded-full transition-all duration-300"
+                        style={{ width: `${Math.min((item.saved / item.price) * 100, 100)}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
