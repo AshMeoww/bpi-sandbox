@@ -2,6 +2,13 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { TaskStore, Task } from "../../../lib/taskStore";
+import BottomNavigation from "../../../components/shared/BottomNavigation";
+import Card from "../../../components/ui/Card";
+import Button from "../../../components/ui/Button";
+import TaskCard from "../../../components/kid/TaskCard";
+import BalanceCard from "../../../components/kid/BalanceCard";
+import LevelCard from "../../../components/kid/LevelCard";
+import Header from "../../../components/shared/Header";
 
 type Transaction = {
   id: number;
@@ -143,23 +150,14 @@ export default function Dashboard() {
             <h3 className="text-lg font-bold text-gray-800 mb-3">Tasks from Parent</h3>
             <div className="space-y-3">
               {pendingTasks.map((task) => (
-                <div key={task.id} className="p-3 bg-yellow-50 border-2 border-yellow-200 rounded-xl">
-                  <div className="flex justify-between items-center mb-2">
-                    <div>
-                      <div className="font-bold text-gray-800">{task.title}</div>
-                      <div className="text-sm text-gray-600">₱{task.reward} reward {task.badge && `+ ${task.badge} badge`}</div>
-                    </div>
-                    {task.isNew && (
-                      <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-                    )}
-                  </div>
-                  <button
-                    onClick={() => handleCompleteTask(task.id)}
-                    className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white py-2 rounded-lg font-bold text-sm shadow-lg"
-                  >
-                    Mark Complete
-                  </button>
-                </div>
+                <TaskCard
+                  key={task.id}
+                  title={task.title}
+                  reward={task.reward}
+                  badge={task.badge}
+                  isNew={task.isNew}
+                  onComplete={() => handleCompleteTask(task.id)}
+                />
               ))}
             </div>
           </div>
@@ -167,24 +165,8 @@ export default function Dashboard() {
 
         {/* Bento Grid Layout */}
         <div className="grid grid-cols-2 gap-3 sm:gap-4">
-          {/* Level Card - Small */}
-          <div className="bg-white rounded-2xl shadow-xl p-4">
-            <div className="text-2xl font-black text-yellow-600 mb-1">Level {level}</div>
-            <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
-              <div 
-                className="bg-yellow-500 h-2 rounded-full transition-all duration-300"
-                style={{ width: `${(xp / xpToNext) * 100}%` }}
-              ></div>
-            </div>
-            <div className="text-xs text-yellow-700">{xpToNext - xp} XP to go</div>
-          </div>
-
-          {/* Balance Card - Small */}
-          <div className="bg-white rounded-2xl shadow-xl p-4">
-            <div className="text-xs font-bold text-gray-600 mb-1">My Balance</div>
-            <div className="text-2xl font-black text-green-600">₱{balance.toFixed(2)}</div>
-            <div className="text-xs text-green-700">Available</div>
-          </div>
+          <LevelCard level={level} xp={xp} xpToNext={xpToNext} />
+          <BalanceCard balance={balance} />
 
           {/* Wishlist - Wide */}
           <div className="col-span-2 bg-white rounded-2xl shadow-xl p-4">
@@ -311,27 +293,14 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
-        <div className="flex justify-around items-center max-w-md mx-auto">
-          <div className="flex flex-col items-center py-2 px-3 rounded-xl bg-purple-100">
-            <div className="w-6 h-6 bg-purple-500 rounded mb-1"></div>
-            <span className="text-xs font-bold text-purple-600">Home</span>
-          </div>
-          <Link href="/kid/tasks" className="flex flex-col items-center py-2 px-3 rounded-xl hover:bg-gray-100 transition-colors">
-            <div className="w-6 h-6 bg-gray-400 rounded mb-1"></div>
-            <span className="text-xs font-medium text-gray-600">Tasks</span>
-          </Link>
-          <Link href="/kid/wishlist" className="flex flex-col items-center py-2 px-3 rounded-xl hover:bg-gray-100 transition-colors">
-            <div className="w-6 h-6 bg-gray-400 rounded mb-1"></div>
-            <span className="text-xs font-medium text-gray-600">Wishlist</span>
-          </Link>
-          <Link href="/kid/profile" className="flex flex-col items-center py-2 px-3 rounded-xl hover:bg-gray-100 transition-colors">
-            <div className="w-6 h-6 bg-gray-400 rounded-full mb-1"></div>
-            <span className="text-xs font-medium text-gray-600">Profile</span>
-          </Link>
-        </div>
-      </div>
+      <BottomNavigation
+        items={[
+          { href: "/kid/dashboard", icon: "home", label: "Home", isActive: true },
+          { href: "/kid/tasks", icon: "tasks", label: "Tasks" },
+          { href: "/kid/wishlist", icon: "wishlist", label: "Wishlist" },
+          { href: "/kid/profile", icon: "profile", label: "Profile", isRounded: true }
+        ]}
+      />
     </div>
   );
 }
