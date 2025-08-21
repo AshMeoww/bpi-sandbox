@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { TaskStore, Task as AssignedTask } from "../../../lib/taskStore";
+import BottomNavigation from "../../../components/shared/BottomNavigation";
+import Image from "next/image";
 
 type Task = {
   id: number;
@@ -76,7 +78,7 @@ export default function Tasks() {
   const pendingAssignedTasks = assignedTasks.filter(t => t.status === 'pending');
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-400 via-blue-400 to-purple-400 pb-20">
+    <div className="min-h-screen bg-cover bg-center bg-no-repeat pb-20" style={{backgroundImage: "url('/BPI assets/kid-dashboard.png')"}}>
       <div className="max-w-md mx-auto p-4">
         <header className="text-center mb-6">
           <div className="flex justify-between items-center mb-4">
@@ -87,181 +89,53 @@ export default function Tasks() {
               Earned: ₱{totalEarned}
             </div>
           </div>
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4">
-            <h1 className="text-2xl font-black text-white">Earn Money</h1>
-            <p className="text-white/80 text-sm">Complete tasks to earn rewards!</p>
+          <div className="p-4">
+            <h1 className="text-4xl font-bold text-black">TASKS</h1>
           </div>
         </header>
 
-        {!selectedTask ? (
-          <div className="space-y-4">
-            {/* Assigned Tasks from Parent */}
-            {pendingAssignedTasks.length > 0 && (
-              <div className="bg-white rounded-2xl shadow-xl p-4 mb-4">
-                <h3 className="text-lg font-bold text-gray-800 mb-3">Tasks from Parent</h3>
-                <div className="space-y-3">
-                  {pendingAssignedTasks.map((task) => (
-                    <div key={task.id} className="bg-yellow-50 border-2 border-yellow-200 rounded-xl p-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-3">
-                          <div className="text-3xl">👨‍👩‍👧‍👦</div>
-                          <div>
-                            <h3 className="font-bold text-gray-800">{task.title}</h3>
-                            <p className="text-sm text-gray-600">Assigned by parent</p>
-                            <div className="flex items-center space-x-2 mt-1">
-                              <span className="px-2 py-1 rounded-full text-xs font-bold bg-purple-100 text-purple-600">
-                                PARENT TASK
-                              </span>
-                              <span className="text-green-600 font-bold">₱{task.reward}</span>
-                              {task.badge && <span className="text-blue-600 text-xs">+ {task.badge} badge</span>}
-                            </div>
-                          </div>
-                        </div>
-                        <button
-                          onClick={() => {
-                            TaskStore.updateTask(task.id, { status: 'completed', isNew: false });
-                            setAssignedTasks(TaskStore.getTasks());
-                          }}
-                          className="bg-green-500 text-white px-4 py-2 rounded-xl font-bold text-sm hover:bg-green-600 transition-all"
-                        >
-                          Complete
-                        </button>
-                      </div>
-                    </div>
-                  ))}
+        {/* Example task card */}
+        <div>
+          <div className="bg-white rounded-2xl shadow-xl p-4 relative">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4 flex-1">
+                <div className="relative z-10">
+                  <h3 className="font-bold text-gray-800 text-2xl">Sweep floor</h3>
+                  <p className="text-sm text-gray-600">Sweep the entire floor of your room</p>
+                  <div className="flex items-center space-x-2 mt-2">
+                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-green-500 text-white">
+                      DAILY
+                    </span>
+                    <span className="text-green-600 font-bold">Earn: ₱200</span>
+                  </div>
                 </div>
               </div>
-            )}
-            
-            {/* Regular Tasks */}
-            {availableTasks.map((task) => (
-              <div key={task.id} className="bg-white rounded-2xl shadow-xl p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="text-3xl">{task.icon}</div>
-                    <div>
-                      <h3 className="font-bold text-gray-800">{task.title}</h3>
-                      <p className="text-sm text-gray-600">{task.description}</p>
-                      <div className="flex items-center space-x-2 mt-1">
-                        <span className={`px-2 py-1 rounded-full text-xs font-bold ${
-                          task.type === "chore" ? "bg-blue-100 text-blue-600" :
-                          task.type === "quiz" ? "bg-purple-100 text-purple-600" :
-                          "bg-yellow-100 text-yellow-600"
-                        }`}>
-                          {task.type.toUpperCase()}
-                        </span>
-                        <span className="text-green-600 font-bold">₱{task.reward}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => setSelectedTask(task)}
-                    className="bg-green-500 text-white px-4 py-2 rounded-xl font-bold text-sm hover:bg-green-600 transition-all"
-                  >
-                    Start
-                  </button>
-                </div>
+              
+              <div className="flex items-center gap-4">
+                <button className="absolute right-0 top-0 cursor-pointer transform transition-transform hover:scale-110">
+                  <Image 
+                    src="/BPI assets/staar.png"
+                    alt="pink star"
+                    width={120}
+                    height={120}
+                    className="animate-pulse"
+                  />
+                </button>
               </div>
-            ))}
-
-            {availableTasks.length === 0 && (
-              <div className="bg-white rounded-2xl shadow-xl p-6 text-center">
-                <div className="text-6xl mb-4">🎉</div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">All Done!</h3>
-                <p className="text-gray-600 mb-4">You've completed all available tasks. Great job!</p>
-                <Link href="/kid/dashboard" className="bg-purple-500 text-white px-6 py-3 rounded-xl font-bold">
-                  Back to Dashboard
-                </Link>
-              </div>
-            )}
+            </div>
           </div>
-        ) : (
-          <div className="bg-white rounded-2xl shadow-xl p-6">
-            {selectedTask.type === "quiz" ? (
-              <div className="text-center">
-                <div className="text-4xl mb-4">🧠</div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4">{selectedTask.title}</h3>
-                
-                {quizStep < quizQuestions.length ? (
-                  <div>
-                    <p className="text-gray-600 mb-6">Question {quizStep + 1} of {quizQuestions.length}</p>
-                    <h4 className="text-lg font-bold text-gray-800 mb-4">{quizQuestions[quizStep].question}</h4>
-                    <div className="space-y-3">
-                      {quizQuestions[quizStep].options.map((option, index) => (
-                        <button
-                          key={index}
-                          onClick={() => handleQuizAnswer(index)}
-                          className="w-full p-3 border-2 border-gray-200 rounded-xl hover:border-purple-400 hover:bg-purple-50 transition-all text-left"
-                        >
-                          {option}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                ) : (
-                  <div>
-                    <h4 className="text-lg font-bold text-gray-800 mb-4">
-                      {score >= 2 ? "Great job! 🎉" : "Try again! 💪"}
-                    </h4>
-                    <p className="text-gray-600 mb-4">You got {score} out of {quizQuestions.length} correct.</p>
-                    {score < 2 && (
-                      <button
-                        onClick={() => {setQuizStep(0); setScore(0);}}
-                        className="bg-purple-500 text-white px-6 py-3 rounded-xl font-bold"
-                      >
-                        Try Again
-                      </button>
-                    )}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div className="text-center">
-                <div className="text-6xl mb-4">{selectedTask.icon}</div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4">{selectedTask.title}</h3>
-                <p className="text-gray-600 mb-6">{selectedTask.description}</p>
-                <p className="text-sm text-gray-500 mb-6">Ask a parent to confirm you completed this task!</p>
-                <div className="flex space-x-3">
-                  <button
-                    onClick={() => setSelectedTask(null)}
-                    className="flex-1 bg-gray-300 text-gray-700 py-3 rounded-xl font-bold"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={() => completeTask(selectedTask.id)}
-                    className="flex-1 bg-green-500 text-white py-3 rounded-xl font-bold"
-                  >
-                    Mark Complete
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-
-      {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
-        <div className="flex justify-around items-center max-w-md mx-auto">
-          <Link href="/kid/dashboard" className="flex flex-col items-center py-2 px-3 rounded-xl hover:bg-gray-100 transition-colors">
-            <div className="w-6 h-6 bg-gray-400 rounded mb-1"></div>
-            <span className="text-xs font-medium text-gray-600">Home</span>
-          </Link>
-          <div className="flex flex-col items-center py-2 px-3 rounded-xl bg-green-100">
-            <div className="w-6 h-6 bg-green-500 rounded mb-1"></div>
-            <span className="text-xs font-bold text-green-600">Tasks</span>
-          </div>
-          <Link href="/kid/wishlist" className="flex flex-col items-center py-2 px-3 rounded-xl hover:bg-gray-100 transition-colors">
-            <div className="w-6 h-6 bg-gray-400 rounded mb-1"></div>
-            <span className="text-xs font-medium text-gray-600">Wishlist</span>
-          </Link>
-          <Link href="/kid/profile" className="flex flex-col items-center py-2 px-3 rounded-xl hover:bg-gray-100 transition-colors">
-            <div className="w-6 h-6 bg-gray-400 rounded-full mb-1"></div>
-            <span className="text-xs font-medium text-gray-600">Profile</span>
-          </Link>
         </div>
+
       </div>
+
+      <BottomNavigation
+        items={[
+          { href: "/kid/dashboard", icon: "/BPI assets/beige-home.png", label: "Home" },
+          { href: "/kid/tasks", icon: "/BPI assets/beige-piggy-bank.png", label: "Tasks", isActive: true },
+          { href: "/kid/wishlist", icon: "/BPI assets/beige-star.png", label: "Wishlist" },
+          { href: "/kid/profile", icon: "/BPI assets/beige-home.png", label: "Profile" }
+        ]}
+      />
     </div>
   );
 }

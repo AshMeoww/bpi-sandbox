@@ -81,7 +81,7 @@ export default function Learn() {
   const completedCount = cards.filter(c => c.completed).length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-400 via-pink-400 to-purple-400 p-4">
+    <div className="min-h-screen bg-cover bg-center bg-no-repeat p-4" style={{backgroundImage: "url('/BPI assets/your-background-image.png')"}}>
       <div className="max-w-md mx-auto">
         <header className="text-center mb-6">
           <div className="flex justify-between items-center mb-4">

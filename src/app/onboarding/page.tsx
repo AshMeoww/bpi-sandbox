@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Onboarding() {
   const [step, setStep] = useState(0);
@@ -35,7 +36,7 @@ export default function Onboarding() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400 p-4">
+    <div className="min-h-screen bg-gradient-to-br bg-[#F2E8C9] p-4">
       <div className="max-w-md mx-auto">
         <header className="text-center mb-6">
           <Link href="/" className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg mx-auto mb-4">
@@ -71,13 +72,17 @@ export default function Onboarding() {
               <p className="text-gray-600 mb-6">Choose your experience:</p>
               <div className="space-y-4">
                 <button
-                  onClick={() => {setUserType('child'); handleNext();}}
+                  onClick={() => window.location.href = "/kid/dashboard"}
                   className="w-full p-6 border-2 border-gray-200 rounded-xl hover:border-purple-400 hover:bg-purple-50 transition-all"
                 >
                   <div className="flex items-center space-x-4">
                     <div className="w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center">
-                      {/* [CHILD_LOGO_PLACEHOLDER] */}
-                      <div className="w-10 h-10 bg-purple-500 rounded-lg"></div>
+                      <Image 
+                        src="/BPI assets/sandcastle-icon.png"
+                        alt="Child Logo"
+                        width={40}
+                        height={40}
+                      />
                     </div>
                     <div className="text-left">
                       <h3 className="text-lg font-bold text-gray-800">I'm a Kid</h3>
@@ -86,13 +91,17 @@ export default function Onboarding() {
                   </div>
                 </button>
                 <button
-                  onClick={() => {setUserType('parent'); handleNext();}}
+                  onClick={() => window.location.href = "/parent-app"}
                   className="w-full p-6 border-2 border-gray-200 rounded-xl hover:border-blue-400 hover:bg-blue-50 transition-all"
                 >
                   <div className="flex items-center space-x-4">
                     <div className="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center">
-                      {/* [PARENT_LOGO_PLACEHOLDER] */}
-                      <div className="w-10 h-10 bg-blue-500 rounded-lg"></div>
+                      <Image 
+                        src="/BPI assets/shovel-icon.png"
+                        alt="Parent Logo"
+                        width={40}
+                        height={40}
+                      />
                     </div>
                     <div className="text-left">
                       <h3 className="text-lg font-bold text-gray-800">I'm a Parent</h3>
@@ -117,151 +126,12 @@ export default function Onboarding() {
                 className="w-full p-3 border-2 border-gray-200 rounded-xl text-center font-bold text-lg focus:border-purple-400 focus:outline-none mb-6 text-black"
               />
               <button
-                onClick={handleNext}
+                onClick={() => window.location.href = userType === 'child' ? '/kid/dashboard' : '/parent-app'}
                 disabled={!name}
                 className="w-full bg-purple-500 text-white py-3 rounded-xl font-bold disabled:bg-gray-300 disabled:cursor-not-allowed"
               >
-                Next
+                Start My Journey!
               </button>
-            </div>
-          )}
-
-          {step === 2 && (
-            <div className="text-center">
-              {userType === 'child' ? (
-                <div>
-                  <div className="text-6xl mb-4">🎂</div>
-                  <h2 className="text-2xl font-bold text-gray-800 mb-4">How old are you, {name}?</h2>
-                  <div className="grid grid-cols-4 gap-2 mb-6">
-                    {[7,8,9,10,11,12,13,14].map((ageOption) => (
-                      <button
-                        key={ageOption}
-                        onClick={() => {setAge(ageOption.toString()); handleNext();}}
-                        className="p-3 border-2 border-gray-200 rounded-xl font-bold hover:border-purple-400 hover:bg-purple-50 transition-all"
-                      >
-                        {ageOption}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                <div>
-                  <div className="text-6xl mb-4">👤</div>
-                  <h2 className="text-2xl font-bold text-gray-800 mb-4">Choose your avatar, {name}</h2>
-                  <div className="grid grid-cols-4 gap-3 mb-6">
-                    {parentAvatars.map((avatarOption, index) => (
-                      <button
-                        key={index}
-                        onClick={() => {setAvatar(avatarOption); setStep(userType === 'parent' ? 3 : 4);}}
-                        className="p-4 border-2 border-gray-200 rounded-xl text-3xl hover:border-blue-400 hover:bg-blue-50 transition-all"
-                      >
-                        {avatarOption}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-
-          {step === 3 && userType === 'child' && (
-            <div className="text-center">
-              <div className="text-6xl mb-4">👤</div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">Choose your avatar, {name}</h2>
-              <div className="grid grid-cols-4 gap-3 mb-6">
-                {childAvatars.map((avatarOption, index) => (
-                  <button
-                    key={index}
-                    onClick={() => {setAvatar(avatarOption); handleNext();}}
-                    className="p-4 border-2 border-gray-200 rounded-xl text-3xl hover:border-purple-400 hover:bg-purple-50 transition-all"
-                  >
-                    {avatarOption}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {step === 3 && userType === 'parent' && (
-            <div className="text-center">
-              <div className="text-6xl mb-4">🎉</div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">Welcome, {name}!</h2>
-              <div className="bg-blue-50 rounded-xl p-4 mb-6">
-                <p className="text-gray-700 mb-2">You're all set to monitor and guide your child's financial learning journey.</p>
-                <div className="text-4xl mb-2">{avatar}</div>
-              </div>
-              <Link
-                href="/parent-app"
-                className="w-full bg-blue-500 text-white py-3 rounded-xl font-bold inline-block text-center"
-              >
-                Go to Parent Dashboard
-              </Link>
-            </div>
-          )}
-
-          {step === 4 && userType === 'child' && (
-            <div className="text-center">
-              <div className="text-6xl mb-4">🎯</div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">What do you want to save for?</h2>
-              <div className="space-y-3">
-                {goals.map((goalOption) => (
-                  <button
-                    key={goalOption.id}
-                    onClick={() => handleGoalSelect(goalOption)}
-                    className="w-full p-4 border-2 border-gray-200 rounded-xl hover:border-purple-400 hover:bg-purple-50 transition-all flex items-center space-x-3"
-                  >
-                    <span className="text-2xl">{goalOption.icon}</span>
-                    <div className="text-left">
-                      <div className="font-bold">{goalOption.name}</div>
-                      {goalOption.amount > 0 && (
-                        <div className="text-sm text-gray-500">₱{goalOption.amount}</div>
-                      )}
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {step === 5 && goal === "custom" && (
-            <div className="text-center">
-              <div className="text-6xl mb-4">💰</div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">How much do you need?</h2>
-              <input
-                type="number"
-                placeholder="Enter amount"
-                value={goalAmount}
-                onChange={(e) => setGoalAmount(e.target.value)}
-                className="w-full p-3 border-2 border-gray-200 rounded-xl text-center font-bold text-lg focus:border-purple-400 focus:outline-none mb-6 text-black"
-              />
-              <Link
-                href="/kid/dashboard"
-                className="w-full bg-purple-500 text-white py-3 rounded-xl font-bold inline-block text-center"
-              >
-                Start My Journey!
-              </Link>
-            </div>
-          )}
-
-          {step === 5 && goal !== "custom" && goal !== "" && (
-            <div className="text-center">
-              <div className="text-6xl mb-4">🎉</div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">Perfect, {name}!</h2>
-              <div className="bg-purple-50 rounded-xl p-4 mb-6">
-                <div className="text-4xl mb-2">{avatar}</div>
-                <p className="text-gray-700">
-                  You want to save <strong>₱{goalAmount}</strong> for your {goals.find(g => g.id === goal)?.name}!
-                </p>
-                <p className="text-sm text-gray-500 mt-2">
-                  If you save ₱50 per week, you'll reach your goal in {Math.ceil(parseInt(goalAmount) / 50)} weeks!
-                </p>
-              </div>
-              <Link
-                href="/kid/dashboard"
-                className="w-full bg-purple-500 text-white py-3 rounded-xl font-bold inline-block text-center"
-              >
-                Start My Journey!
-              </Link>
             </div>
           )}
         </div>

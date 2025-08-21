@@ -1,3 +1,4 @@
+import React from "react";
 import Card from "../ui/Card";
 
 type BalanceCardProps = {
@@ -5,12 +6,11 @@ type BalanceCardProps = {
   title?: string;
 };
 
-export default function BalanceCard({ balance, title = "My Balance" }: BalanceCardProps) {
+export default function BalanceCard({ balance, title = "You saved a total of" }: BalanceCardProps) {
   return (
-    <Card>
-      <div className="text-xs font-bold text-gray-600 mb-1">{title}</div>
-      <div className="text-2xl font-black text-green-600">₱{balance.toFixed(2)}</div>
-      <div className="text-xs text-green-700">Available</div>
+    <Card className="!bg-[#AD1F23]">
+      <div className="text-xl font-bold text-white mb-1 text-left">{title}</div>
+      <div className="text-5xl font-black text-white text-left">₱{balance.toFixed(2)}</div>
     </Card>
   );
 }

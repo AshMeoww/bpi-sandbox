@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import BottomNavigation from "../../../components/shared/BottomNavigation";
 
 export default function ParentProfile() {
   const [email, setEmail] = useState("");
@@ -170,29 +171,14 @@ export default function ParentProfile() {
         </div>
       </div>
 
-      {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
-        <div className="max-w-md mx-auto">
-          <div className="flex justify-around items-center">
-            <Link href="/parent-app" className="flex flex-col items-center py-2 px-3 text-gray-400">
-              <div className="w-6 h-6 bg-gray-400 rounded-lg mb-1"></div>
-              <span className="text-xs font-medium">Dashboard</span>
-            </Link>
-            <Link href="/parent-app/tasks" className="flex flex-col items-center py-2 px-3 text-gray-400">
-              <div className="w-6 h-6 bg-gray-400 rounded-lg mb-1"></div>
-              <span className="text-xs font-medium">Tasks</span>
-            </Link>
-            <Link href="/parent-app/settings" className="flex flex-col items-center py-2 px-3 text-gray-400">
-              <div className="w-6 h-6 bg-gray-400 rounded-lg mb-1"></div>
-              <span className="text-xs font-medium">Settings</span>
-            </Link>
-            <Link href="/parent-app/profile" className="flex flex-col items-center py-2 px-3 text-blue-600">
-              <div className="w-6 h-6 bg-blue-600 rounded-full mb-1"></div>
-              <span className="text-xs font-bold">Profile</span>
-            </Link>
-          </div>
-        </div>
-      </div>
+      <BottomNavigation
+        items={[
+          { href: "/parent-app", icon: "/BPI assets/beige-home.png", label: "Dashboard" },
+          { href: "/parent-app/tasks", icon: "/BPI assets/beige-piggy-bank.png", label: "Tasks" },
+          { href: "/parent-app/settings", icon: "/BPI assets/beige-star.png", label: "Settings" },
+          { href: "/parent-app/profile", icon: "/BPI assets/beige-home.png", label: "Profile", isActive: true }
+        ]}
+      />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import BottomNavigation from "../../../components/shared/BottomNavigation";
 
 export default function Wishlist() {
   const [balance] = useState(50.00);
@@ -13,7 +14,7 @@ export default function Wishlist() {
   ]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400 pb-20">
+    <div className="min-h-screen bg-cover bg-center bg-no-repeat pb-20" style={{backgroundImage: "url('/BPI assets/kid-dashboard.png')"}}>
       <div className="max-w-md mx-auto p-4">
         {/* Header */}
         <header className="text-center mb-6">
@@ -93,27 +94,14 @@ export default function Wishlist() {
         </div>
       </div>
 
-      {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
-        <div className="flex justify-around items-center max-w-md mx-auto">
-          <Link href="/kid/dashboard" className="flex flex-col items-center py-2 px-3 rounded-xl hover:bg-gray-100 transition-colors">
-            <div className="w-6 h-6 bg-gray-400 rounded mb-1"></div>
-            <span className="text-xs font-medium text-gray-600">Home</span>
-          </Link>
-          <Link href="/kid/tasks" className="flex flex-col items-center py-2 px-3 rounded-xl hover:bg-gray-100 transition-colors">
-            <div className="w-6 h-6 bg-gray-400 rounded mb-1"></div>
-            <span className="text-xs font-medium text-gray-600">Tasks</span>
-          </Link>
-          <div className="flex flex-col items-center py-2 px-3 rounded-xl bg-purple-100">
-            <div className="w-6 h-6 bg-purple-500 rounded mb-1"></div>
-            <span className="text-xs font-bold text-purple-600">Wishlist</span>
-          </div>
-          <Link href="/kid/profile" className="flex flex-col items-center py-2 px-3 rounded-xl hover:bg-gray-100 transition-colors">
-            <div className="w-6 h-6 bg-gray-400 rounded-full mb-1"></div>
-            <span className="text-xs font-medium text-gray-600">Profile</span>
-          </Link>
-        </div>
-      </div>
+      <BottomNavigation
+        items={[
+          { href: "/kid/dashboard", icon: "/BPI assets/beige-home.png", label: "Home" },
+          { href: "/kid/tasks", icon: "/BPI assets/beige-piggy-bank.png", label: "Tasks" },
+          { href: "/kid/wishlist", icon: "/BPI assets/beige-star.png", label: "Wishlist", isActive: true },
+          { href: "/kid/profile", icon: "/BPI assets/beige-home.png", label: "Profile" }
+        ]}
+      />
     </div>
   );
 }

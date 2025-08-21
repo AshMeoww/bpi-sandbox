@@ -1,11 +1,11 @@
 import Link from "next/link";
+import Image from "next/image";
 
 type NavItem = {
   href: string;
   icon: string;
   label: string;
   isActive?: boolean;
-  isRounded?: boolean;
 };
 
 type BottomNavigationProps = {
@@ -14,7 +14,7 @@ type BottomNavigationProps = {
 
 export default function BottomNavigation({ items }: BottomNavigationProps) {
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+    <nav className="fixed inset-x-0 bottom-0 z-50 bg-[#1F4E79] border-t px-4 py-2">
       <div className="max-w-md mx-auto">
         <div className="flex justify-around items-center">
           {items.map((item, index) => (
@@ -22,14 +22,17 @@ export default function BottomNavigation({ items }: BottomNavigationProps) {
               key={index}
               href={item.href}
               className={`flex flex-col items-center py-2 px-3 ${
-                item.isActive ? "text-purple-600" : "text-gray-400"
+                item.isActive ? "text-white" : "text-white/80"
               }`}
             >
-              <div
-                className={`w-6 h-6 mb-1 ${
-                  item.isActive ? "bg-purple-600" : "bg-gray-400"
-                } ${item.isRounded ? "rounded-full" : "rounded-lg"}`}
-              ></div>
+              <div className="w-6 h-6 mb-1">
+                <Image
+                  src={item.icon}
+                  alt={item.label}
+                  width={24}
+                  height={24}
+                />
+              </div>
               <span className={`text-xs ${item.isActive ? "font-bold" : "font-medium"}`}>
                 {item.label}
               </span>
@@ -37,6 +40,6 @@ export default function BottomNavigation({ items }: BottomNavigationProps) {
           ))}
         </div>
       </div>
-    </div>
+    </nav>
   );
 }
