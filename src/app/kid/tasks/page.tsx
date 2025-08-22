@@ -78,7 +78,7 @@ export default function Tasks() {
   const pendingAssignedTasks = assignedTasks.filter(t => t.status === 'pending');
 
   return (
-    <div className="min-h-screen bg-cover bg-center bg-no-repeat pb-20" style={{backgroundImage: "url('/BPI assets/kid-dashboard.png')"}}>
+    <div className="min-h-screen bg-cover bg-center bg-no-repeat pb-20" style={{backgroundImage: "url('/BPI assets/kids-dashboard-bg.png')"}}>
       <div className="max-w-md mx-auto p-4">
         <header className="text-center mb-6">
           <div className="flex justify-between items-center mb-4">

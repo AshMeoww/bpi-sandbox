@@ -27,16 +27,23 @@ export default function Dashboard() {
   const newTasksCount = assignedTasks.filter((t) => t.isNew).length;
 
   return (
-    <div className="min-h-screen bg-cover bg-center bg-no-repeat pb-20" style={{backgroundImage: "url('/BPI assets/kid-dashboard.png')"}}>
+    <div className="min-h-screen bg-cover bg-center bg-no-repeat pb-20" style={{backgroundImage: "url('/BPI assets/kids-dashboard-bg.png')"}}>
       <div className="max-w-md mx-auto p-4">
         <header className="text-center mb-6 sm:mb-8">
           <div className="flex justify-between items-center mb-4 sm:mb-6">
             <Link
               href="/"
-              className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center shadow-lg"
+              className="flex items-center justify-center"
             >
-              {/* [LOGO_PLACEHOLDER] */}
-              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-purple-500 rounded-full"></div>
+              <div className="w-32 h-16 sm:w-40 sm:h-20">
+                <Image 
+                src="/BPI assets/sandbox name w logo.png" 
+                alt="BPI Logo" 
+                width={180}
+                height={100}
+                className="object-contain"
+                />
+              </div>
             </Link>
             <Link
               href="/parent-app"
