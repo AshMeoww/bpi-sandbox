@@ -33,18 +33,18 @@ export default function ParentDashboard() {
 
           {/* Two Half Boxes */}
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-[#D5B527] rounded-2xl shadow-xl p-6 h-80 flex flex-col items-center justify-center">
+            <div className="bg-[#D5B527] rounded-2xl shadow-xl p-6 h-40 flex flex-col items-center justify-center">
               <div className="w-20 h-20 rounded-full border-8 border-white/30 border-t-[#AD1F23] mb-2"></div>
               <p className="text-white text-lg font-bold font-['Public_Sans']">75% Saved!</p>
             </div>
-            <div className="bg-[#D5B527] rounded-2xl shadow-xl p-6 h-40">
-              <h4 className="text-[#AD1F23] text-xl font-semibold font-['Baloo_2'] mb-2">{kidName} reached another milestone!</h4>
+            <div className="bg-[#D5B527] rounded-2xl shadow-xl p-6 h-40 relative">
+              <h4 className="text-[#AD1F23] text-2xl font-semibold font-['Baloo_2'] mb-2 z-10 relative">{kidName} reached another milestone!</h4>
               <Image
                 src="/BPI assets/badge mustard yellow.png"
                 alt="badge"                
                 width={100}                
                 height={100}
-                className="mx-auto"
+                className="mx-auto absolute bottom-4 left-1/2 transform -translate-x-1/2 z-0"
               />
             </div>
           </div>

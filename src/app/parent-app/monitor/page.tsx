@@ -33,7 +33,7 @@ export default function Monitor() {
         {/* Current Balance */}
         <div className="bg-[#D5B527] rounded-2xl shadow-xl p-6 mb-6">
           <div className="flex items-center gap-4">
-            <img src="/BPI assets/Girl w yellow bg.png" alt="Piggy Bank" className="w-20 h-20" />
+            <img src="/BPI assets/avatars/Girl w yellow bg.png" alt="Piggy Bank" className="w-20 h-20" />
             <div>
               <h3 className="text-lg font-semibold font-['Baloo_2'] text-black mb-2">{kidName}'s current balance is </h3>
               <div className="text-4xl font-extrabold font-[Public_Sans] text-black">PHP {currentBalance}</div>
@@ -69,8 +69,8 @@ export default function Monitor() {
                 <div className="flex items-center gap-4">
                   <div className="flex-1">
                     <div className="flex flex-col mb-2">
-                      <span className="font-bold font-['Public_Sans'] text-4xl text-black">{goal.item}</span>
-                      <span className="text-3xl font-bold text-black">
+                      <span className="font-bold font-['Public_Sans'] text-3xl text-black">{goal.item}</span>
+                      <span className="text-2xl font-bold text-black">
                         {Math.round((goal.saved / goal.cost) * 100)}%
                       </span>
                     </div>
