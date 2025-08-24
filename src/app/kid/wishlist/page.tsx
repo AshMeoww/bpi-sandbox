@@ -50,7 +50,7 @@ export default function Wishlist() {
             </Link>
           </div>
           <div className="p-4 mb-4">
-            <h1 className="text-4xl font-bold text-black mb-2">WISH LIST</h1>
+            <h1 className="text-5xl font-extrabold font-['Baloo_2'] text-black mb-2">WISH LIST</h1>
           </div>
         </header>
 

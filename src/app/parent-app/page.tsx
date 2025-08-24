@@ -251,9 +251,9 @@ export default function ParentDashboard() {
       <BottomNavigation
         items={[
           { href: "/parent-app", icon: "/BPI assets/beige-home.png", label: "Dashboard", isActive: true },
-          { href: "/parent-app/tasks", icon: "/BPI assets/beige tasks.png", label: "Tasks" },
-          { href: "/parent-app/settings", icon: "/BPI assets/beige-settings.png", label: "Settings" },
-          { href: "/parent-app/profile", icon: "/BPI assets/beige profile.png", label: "Profile" }
+          { href: "/parent-app/tasks", icon: "/BPI assets/beige-piggy-bank.png", label: "Tasks" },
+          { href: "/parent-app/settings", icon: "/BPI assets/list.png", label: "Monitor" },
+          { href: "/parent-app/profile", icon: "/BPI assets/beige-home.png", label: "Profile" }
         ]}
       />
     </div>

@@ -68,30 +68,43 @@ export default function Profile() {
   };
 
   return (
-    <div className="min-h-screen bg-cover bg-center bg-no-repeat p-4 pb-20" style={{backgroundImage: "url('/BPI assets/your-background-image.png')"}}>
+    <div className="min-h-screen bg-cover bg-center bg-no-repeat p-4 pb-20" style={{backgroundImage: "url('/BPI assets/kids-dashboard-bg.png')"}}>
       <div className="max-w-md mx-auto">
-        <header className="mb-6">
-          <Link
-            href="/kid/dashboard"
-            className="w-10 h-10 bg-white rounded-full flex items-center justify-center mb-4"
-          >
-            <div className="w-6 h-6 bg-purple-600 rounded-full"></div>
-          </Link>
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4">
-            <h1 className="text-2xl font-bold text-white mb-2">My Profile</h1>
-            <p className="text-white/80 text-sm">
-              Your learning journey summary
-            </p>
+      <header className="text-center mb-6 sm:mb-8">
+          <div className="flex justify-between items-center mb-4 sm:mb-6">
+            <Link
+              href="/"
+              className="flex items-center justify-center"
+            >
+              <div className="w-32 h-16 sm:w-40 sm:h-20">
+                <Image 
+                src="/BPI assets/sandbox name w logo.png" 
+                alt="BPI Logo" 
+                width={180}
+                height={100}
+                className="object-contain"
+                />
+              </div>
+            </Link>
+            <Link
+              href="/parent-app"
+              className="bg-white/20 backdrop-blur-sm text-white px-3 py-2 sm:px-4 sm:py-2 rounded-full hover:bg-white/30 transition-all text-xs sm:text-sm font-medium"
+            >
+              Parent
+            </Link>
           </div>
         </header>
 
         {/* Profile Status */}
-        <div className="bg-white rounded-2xl shadow-xl p-4 mb-4">
+        <div className="bg-[#FFD103] rounded-2xl shadow-xl p-4 mb-4">
           <div className="flex items-center space-x-4 mb-4">
-            <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-              <span className="text-2xl font-bold text-white">
-                {profileData.name[0]}
-              </span>
+            <div className="w-16 h-16  rounded-full flex items-center justify-center">
+              <Image
+                src="/BPI assets/sandbox.png"
+                alt="Kid"
+                width={64}  
+                height={64}
+              />
             </div>
             <div>
               <h2 className="text-xl font-bold text-gray-800">
@@ -123,8 +136,8 @@ export default function Profile() {
         </div>
 
         {/* Activity Summary */}
-        <div className="bg-white rounded-2xl shadow-xl p-4 mb-4">
-          <h3 className="text-lg font-bold text-gray-800 mb-4">
+        <div className="bg-[#FF9E1D] rounded-2xl shadow-xl p-4 mb-4">
+          <h3 className="text-lg font-bold text-[#1F4E79] mb-4">
             Activity Summary
           </h3>
           <div className="grid grid-cols-2 gap-3">

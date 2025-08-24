@@ -90,7 +90,7 @@ export default function Tasks() {
             </div>
           </div>
           <div className="p-4">
-            <h1 className="text-4xl font-bold text-black">TASKS</h1>
+            <h1 className="text-5xl font-extrabold font-['Baloo_2'] text-black">TASKS</h1>
           </div>
         </header>
 

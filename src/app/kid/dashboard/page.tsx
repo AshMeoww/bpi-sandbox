@@ -53,7 +53,7 @@ export default function Dashboard() {
             </Link>
           </div>
           <div className=" sm:p-2 mb-4 sm:mb-1">
-            <h1 className="text-3xl sm:text-5xl font-black text-black mb-2 tracking-tight text-left">
+            <h1 className="text-3xl sm:text-5xl  text-black mb-2 tracking-tight text-left font-['Baloo_2'] font-extrabold">
               Hi, Kid!{" "}
             </h1>
           </div>
@@ -71,7 +71,7 @@ export default function Dashboard() {
 
         {/* Badge Wall */}
         <div className="bg-[#0A2540] rounded-2xl shadow-xl p-4 w-full">
-          <h3 className="text-lg font-bold text-white mb-3 text-center">Badge Wall</h3>
+          <h3 className="text-lg font-medium font-['Baloo_2'] text-white mb-3 text-center">Badge Wall</h3>
           <div className="flex justify-center space-x-4">
             <div className="flex flex-col items-center">
               <Image src="/BPI assets/star badge.png" alt="Gold Star Badge" width={100} height={100} />
