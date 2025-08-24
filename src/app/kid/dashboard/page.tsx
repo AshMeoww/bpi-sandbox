@@ -93,13 +93,13 @@ export default function Dashboard() {
           <h3 className="text-lg font-medium font-['Baloo_2'] text-white mb-3 text-center">Badge Wall</h3>
           <div className="flex justify-center space-x-4">
             <div className="flex flex-col items-center">
-              <Image src="/BPI assets/star badge.png" alt="Gold Star Badge" width={100} height={100} />
+              <Image src="/BPI assets/badges/badge-1.png" alt="Gold Star Badge" width={100} height={100} />
             </div>
             <div className="flex flex-col items-center">
-              <Image src="/BPI assets/certified toy tamer.png" alt="Toy Tamer Badge" width={100} height={100} />
+              <Image src="/BPI assets/badges/badge-2.png" alt="Toy Tamer Badge" width={100} height={100} />
             </div>
             <div className="flex flex-col items-center">
-              <Image src="/BPI assets/power brain champ badge.png" alt="Brain Champ Badge" width={100} height={100} />
+              <Image src="/BPI assets/badges/badge-3.png" alt="Brain Champ Badge" width={100} height={100} />
             </div>
           </div>
         </div>
