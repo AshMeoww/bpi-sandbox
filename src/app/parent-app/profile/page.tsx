@@ -1,44 +1,65 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import BottomNavigation from "../../../components/shared/BottomNavigation";
 import Logo from "../../../components/shared/Logo";
 
 export default function ParentProfile() {
-  const [parentName] = useState("Maria");
-  const [kidName] = useState("Alex");
   const [email, setEmail] = useState("");
   const [showEmailSent, setShowEmailSent] = useState(false);
 
-  const parentData = {
-    name: "Maria Santos",
+  const profileData = {
+    name: "Maria",
     childName: "Alex",
     joinDate: "2024-01-10",
     childAge: 10,
-    childLevel: 3
+    childLevel: 3,
   };
 
-  const childSummary = {
-    totalBalance: 125.50,
-    totalEarned: 245.50,
-    totalSpent: 120.00,
+  const activitySummary = {
+    totalEarned: 245.5,
+    totalSpent: 120.0,
     tasksCompleted: 12,
     quizzesCompleted: 8,
     badgesEarned: 3,
     daysActive: 15,
-    weeklySpending: 25.00,
-    weeklyLimit: 50.00
   };
 
-  const recentActivity = [
-    { type: "task_completed", description: "Alex completed: Clean Room", amount: 25, date: "2024-01-15" },
-    { type: "quiz_completed", description: "Alex finished: Money Basics Quiz", amount: 15, date: "2024-01-14" },
-    { type: "spending", description: "Alex spent at: Candy Store", amount: -5, date: "2024-01-13" },
-    { type: "allowance", description: "Weekly allowance sent", amount: 20, date: "2024-01-12" },
-    { type: "reward", description: "Birthday gift added", amount: 30, date: "2024-01-11" }
+  const recentTransactions = [
+    {
+      type: "deposit",
+      amount: 25,
+      description: "Task: Clean Room",
+      date: "2024-01-15",
+    },
+    {
+      type: "deposit",
+      amount: 15,
+      description: "Quiz: Money Basics",
+      date: "2024-01-14",
+    },
+    {
+      type: "withdrawal",
+      amount: 5,
+      description: "Candy Store",
+      date: "2024-01-13",
+    },
+    {
+      type: "deposit",
+      amount: 20,
+      description: "Weekly Allowance",
+      date: "2024-01-12",
+    },
+    {
+      type: "deposit",
+      amount: 30,
+      description: "Birthday Gift",
+      date: "2024-01-11",
+    },
   ];
 
-  const handleSendReport = () => {
+  const handleSendReceipt = () => {
     if (!email) return;
     setShowEmailSent(true);
     setTimeout(() => setShowEmailSent(false), 3000);
@@ -46,128 +67,154 @@ export default function ParentProfile() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 p-4 pb-20">
+    <div className="min-h-screen bg-cover bg-center bg-no-repeat p-4 pb-20" style={{backgroundImage: "url('/BPI assets/parents-dashboard.png')"}}>
       <div className="max-w-md mx-auto">
-        <header className="mb-6">
-          <div className="mb-4">
+      <header className="text-center mb-6 sm:mb-8">
+          <div className="flex justify-between items-center mb-4 sm:mb-6">
             <Logo />
-          </div>
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4">
-            <h1 className="text-2xl font-bold text-white mb-2">Hello, {parentName}!</h1>
-            <p className="text-white/80 text-sm">Monitor {kidName}'s progress</p>
+            <Link
+              href="/kid/dashboard"
+              className="bg-white/20 backdrop-blur-sm text-white px-3 py-2 sm:px-4 sm:py-2 rounded-full hover:bg-white/30 transition-all text-xs sm:text-sm font-medium"
+            >
+              Kid's View
+            </Link>
           </div>
         </header>
 
-        {/* Parent Info */}
+        {/* Profile Status */}
         <div className="bg-white rounded-2xl shadow-xl p-4 mb-4">
           <div className="flex items-center space-x-4 mb-4">
-            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center">
-              <span className="text-2xl font-bold text-white">{parentData.name[0]}</span>
+            <div className="w-16 h-16  rounded-full flex items-center justify-center">
+              <Image
+                src="/BPI assets/sandbox.png"
+                alt="Parent"
+                width={64}  
+                height={64}
+              />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-gray-800">{parentData.name}</h2>
-              <p className="text-gray-600">Parent of {parentData.childName}</p>
-              <p className="text-sm text-gray-500">Member since {parentData.joinDate}</p>
+              <h2 className="text-xl font-bold text-gray-800">
+                {profileData.name}
+              </h2>
+              <p className="text-gray-600">
+                Parent of {profileData.childName}
+              </p>
+              <p className="text-sm text-gray-500">
+                Member since {profileData.joinDate}
+              </p>
             </div>
           </div>
-          
+
           <div className="grid grid-cols-2 gap-3">
-            <div className="bg-blue-50 rounded-xl p-3">
-              <div className="text-2xl font-bold text-blue-600">₱{childSummary.totalBalance}</div>
-              <div className="text-xs text-blue-700">{parentData.childName}'s Balance</div>
+            <div className="bg-[#F5ADFF] rounded-xl p-3">
+              <div className="text-2xl font-bold text-[#E308C2]">
+                Level {profileData.childLevel}
+              </div>
+              <div className="text-xs text-[#E308C2]">{profileData.childName}'s Level</div>
             </div>
-            <div className="bg-green-50 rounded-xl p-3">
-              <div className="text-2xl font-bold text-green-600">Level {parentData.childLevel}</div>
-              <div className="text-xs text-green-700">Learning Progress</div>
+            <div className="bg-[#FFE2AD] rounded-xl p-3">
+              <div className="text-2xl font-bold text-[#E37908]">
+                {profileData.childAge} years
+              </div>
+              <div className="text-xs text-[#E37908]">Child's Age</div>
             </div>
           </div>
         </div>
 
-        {/* Child Activity Overview */}
-        <div className="bg-white rounded-2xl shadow-xl p-4 mb-4">
-          <h3 className="text-lg font-bold text-gray-800 mb-4">{parentData.childName}'s Summary</h3>
+        {/* Activity Summary */}
+        <div className="bg-[#264653] rounded-2xl shadow-xl p-4 mb-4">
+          <h3 className="text-lg font-bold text-white mb-4">
+            {profileData.childName}'s Summary
+          </h3>
           <div className="grid grid-cols-2 gap-3">
-            <div className="text-center p-3 bg-green-50 rounded-xl">
-              <div className="text-xl font-bold text-green-600">₱{childSummary.totalEarned}</div>
-              <div className="text-xs text-green-700">Total Earned</div>
+            <div className="text-center p-3 bg-[#ADFFBE] rounded-xl">
+              <div className="text-xl font-bold text-[#08E342]">
+                ₱{activitySummary.totalEarned}
+              </div>
+              <div className="text-xs text-[#08E342]">Total Earned</div>
             </div>
-            <div className="text-center p-3 bg-red-50 rounded-xl">
-              <div className="text-xl font-bold text-red-600">₱{childSummary.totalSpent}</div>
-              <div className="text-xs text-red-700">Total Spent</div>
+            <div className="text-center p-3 bg-[#FFADAD] rounded-xl">
+              <div className="text-xl font-bold text-[#FF5B5B]">
+                ₱{activitySummary.totalSpent}
+              </div>
+              <div className="text-xs text-[#FF5B5B]">Total Spent</div>
             </div>
-            <div className="text-center p-3 bg-blue-50 rounded-xl">
-              <div className="text-xl font-bold text-blue-600">{childSummary.tasksCompleted}</div>
-              <div className="text-xs text-blue-700">Tasks Done</div>
+            <div className="text-center p-3 bg-[#ADDFFF]  rounded-xl">
+              <div className="text-xl font-bold text-[#5B84FF]">
+                {activitySummary.tasksCompleted}
+              </div>
+              <div className="text-xs text-[#5B84FF]">Tasks Done</div>
             </div>
-            <div className="text-center p-3 bg-yellow-50 rounded-xl">
-              <div className="text-xl font-bold text-yellow-600">{childSummary.badgesEarned}</div>
-              <div className="text-xs text-yellow-700">Badges Earned</div>
+            <div className="text-center p-3 bg-[#F7FFAD] rounded-xl">
+              <div className="text-xl font-bold text-[#EDB600]">
+                {activitySummary.badgesEarned}
+              </div>
+              <div className="text-xs text-[#EDB600]">Badges Earned</div>
             </div>
           </div>
         </div>
 
-        {/* Weekly Spending Status */}
+        {/* Recent Transactions */}
         <div className="bg-white rounded-2xl shadow-xl p-4 mb-4">
-          <h3 className="text-lg font-bold text-gray-800 mb-4">Weekly Spending</h3>
-          <div className="bg-gray-100 rounded-xl p-4">
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-bold text-gray-700">This Week</span>
-              <span className="text-sm text-gray-600">₱{childSummary.weeklySpending} / ₱{childSummary.weeklyLimit}</span>
-            </div>
-            <div className="w-full bg-gray-200 rounded-full h-3">
-              <div 
-                className="bg-orange-500 h-3 rounded-full transition-all"
-                style={{ width: `${(childSummary.weeklySpending / childSummary.weeklyLimit) * 100}%` }}
-              ></div>
-            </div>
-            <p className="text-xs text-gray-600 mt-2">
-              {childSummary.weeklyLimit - childSummary.weeklySpending > 0 
-                ? `₱${(childSummary.weeklyLimit - childSummary.weeklySpending).toFixed(2)} remaining this week`
-                : "Weekly limit reached"
-              }
-            </p>
-          </div>
-        </div>
-
-        {/* Recent Activity */}
-        <div className="bg-white rounded-2xl shadow-xl p-4 mb-4">
-          <h3 className="text-lg font-bold text-gray-800 mb-4">Recent Activity</h3>
+          <h3 className="text-lg font-bold text-gray-800 mb-4">
+            Recent Activity
+          </h3>
           <div className="space-y-3">
-            {recentActivity.map((activity, index) => (
-              <div key={index} className="flex justify-between items-center p-3 bg-gray-50 rounded-xl">
+            {recentTransactions.map((transaction, index) => (
+              <div
+                key={index}
+                className="flex justify-between items-center p-3 bg-gray-50 rounded-xl"
+              >
                 <div>
-                  <div className="font-bold text-gray-800 text-sm">{activity.description}</div>
-                  <div className="text-xs text-gray-500">{activity.date}</div>
+                  <div className="font-bold text-gray-800 text-sm">
+                    {transaction.description}
+                  </div>
+                  <div className="text-xs text-gray-500">
+                    {transaction.date}
+                  </div>
                 </div>
-                <div className={`font-bold ${activity.amount > 0 ? "text-green-600" : "text-red-600"}`}>
-                  {activity.amount > 0 ? "+" : ""}₱{Math.abs(activity.amount)}
+                <div
+                  className={`font-bold ${
+                    transaction.type === "deposit"
+                      ? "text-green-600"
+                      : "text-red-600"
+                  }`}
+                >
+                  {transaction.type === "deposit" ? "+" : "-"}₱
+                  {transaction.amount}
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Email Report */}
+        {/* Email Receipt */}
         <div className="bg-white rounded-2xl shadow-xl p-4">
-          <h3 className="text-lg font-bold text-gray-800 mb-4">Send Monthly Report</h3>
-          <p className="text-sm text-gray-600 mb-4">Get a detailed summary of {parentData.childName}'s learning progress and financial activity</p>
+          <h3 className="text-lg font-bold text-gray-800 mb-4">
+            Send Monthly Report
+          </h3>
+          <p className="text-sm text-gray-600 mb-4">
+            Get a detailed summary of {profileData.childName}'s learning progress and financial activity
+          </p>
           <div className="space-y-3">
             <input
               type="email"
               placeholder="Your email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border-2 border-gray-200 rounded-xl focus:border-blue-400 focus:outline-none transition-colors text-black"
+              className="w-full p-3 border-2 border-gray-200 rounded-xl focus:border-purple-400 focus:outline-none transition-colors text-black"
             />
             <button
-              onClick={handleSendReport}
-              className="w-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-3 rounded-xl font-bold shadow-lg"
+              onClick={handleSendReceipt}
+              className="w-full bg-[#44E762] text-white py-3 rounded-xl font-bold shadow-lg"
             >
               Send Report
             </button>
             {showEmailSent && (
               <div className="bg-green-50 border border-green-200 rounded-xl p-3">
-                <p className="text-green-800 text-sm font-bold">✓ Monthly report sent successfully!</p>
+                <p className="text-green-800 text-sm font-bold">
+                  ✓ Monthly report sent successfully!
+                </p>
               </div>
             )}
           </div>
@@ -176,10 +223,10 @@ export default function ParentProfile() {
 
       <BottomNavigation
         items={[
-          { href: "/parent-app", icon: "/BPI assets/beige-home.png", label: "Home", isActive: true },
+          { href: "/parent-app", icon: "/BPI assets/beige-home.png", label: "Home" },
           { href: "/parent-app/monitor", icon: "/BPI assets/list.png", label: "Monitor" },
           { href: "/parent-app/rewards", icon: "/BPI assets/beige-piggy-bank.png", label: "Rewards" },
-          { href: "/parent-app/profile", icon: "/BPI assets/beige-home.png", label: "Profile" }
+          { href: "/parent-app/profile", icon: "/BPI assets/beige-home.png", label: "Profile", isActive: true }
         ]}
       />
     </div>

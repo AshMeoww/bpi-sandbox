@@ -48,12 +48,21 @@ export default function NicknameInput() {
             type="text"
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
-            className="w-full p-4 border-b-2 border-gray-200 focus:border-purple-400 focus:outline-none transition-colors text-black text-center text-xl font-bold bg-transparent"
+            placeholder="Type your nickname..."
+            className="w-full p-4 border-b-2 border-gray-200 focus:border-purple-400 focus:outline-none transition-all duration-300 text-black text-center text-xl font-bold bg-transparent focus:scale-105 focus:bg-white/20 rounded-lg"
             maxLength={20}
           />
 
           <div className="text-center mt-2">
-            <span className="text-sm text-gray-500">{nickname.length}/20</span>
+            <span className={`text-sm transition-colors ${
+              nickname.length > 15 ? 'text-red-500' : 
+              nickname.length > 10 ? 'text-yellow-500' : 'text-gray-500'
+            }`}>
+              {nickname.length}/20
+            </span>
+            {nickname.length > 0 && (
+              <div className="text-green-500 text-xs mt-1 animate-fade-in">✓ Looking good!</div>
+            )}
           </div>
         </div>
 

@@ -28,26 +28,30 @@ export default function AvatarPicker() {
   const AvatarButton = ({ avatar, index }: { avatar: string; index: number }) => (
     <button
       onClick={() => setSelectedAvatar(avatar)}
-      className={`w-24 h-24 rounded-full border-4 transition-all overflow-hidden ${
+      className={`w-24 h-24 rounded-full border-4 transition-all duration-300 overflow-hidden transform hover:scale-105 active:scale-95 ${
         selectedAvatar === avatar
-          ? "border-purple-500 scale-110"
-          : "border-gray-200 hover:border-purple-300"
+          ? "border-purple-500 scale-110 shadow-lg shadow-purple-300 animate-pulse"
+          : "border-gray-200 hover:border-purple-300 hover:shadow-md"
       }`}
+      style={{animationDelay: `${index * 0.1}s`}}
     >
       <div className="relative w-full h-full">
         <Image
           src={avatar}
           alt={`Avatar ${index + 1}`}
           fill
-          className="object-contain rounded-full"
+          className="object-contain rounded-full transition-transform hover:scale-110"
         />
+        {selectedAvatar === avatar && (
+          <div className="absolute inset-0 bg-purple-500 opacity-20 rounded-full animate-ping"></div>
+        )}
       </div>
     </button>
   );
 
   return (
     <div className="min-h-screen bg-[#F2E8C9] bg-cover bg-no-repeat p-4">
-    className="min-h-screen bg-[#F2E8C9] bg-[url('/BPI assets/backgrounds/bg.png')] bg-no-repeat p-4"      <div className="max-w-md mx-auto">
+<div className="max-w-md mx-auto">
         <header className="text-center mb-8">
           <div className="flex justify-center mb-6">
             <Logo />
@@ -59,13 +63,16 @@ export default function AvatarPicker() {
 
         {selectedAvatar && (
           <div className="text-center mb-6">
-            <div className="relative w-24 h-24 mx-auto mb-2 rounded-full overflow-hidden">
+            <div className="relative w-24 h-24 mx-auto mb-2 rounded-full overflow-hidden border-4 border-purple-500 shadow-lg">
               <Image
                 src={selectedAvatar}
                 alt="Selected avatar"
                 fill
                 className="object-contain rounded-full"
               />
+              <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                <span className="text-white text-xs">✓</span>
+              </div>
             </div>
             <p className="text-lg font-bold text-gray-800">Great choice, {nickname}!</p>
           </div>

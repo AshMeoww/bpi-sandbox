@@ -10,10 +10,13 @@ export default function OnboardingSuccess() {
   const role = searchParams.get("role") as "kid" | "parent";
   const nickname = searchParams.get("nickname") || "";
   const avatar = searchParams.get("avatar") || "";
-  const avatars = avatar ? <Image src={avatar} alt="User Avatar" width={100} height={100} className="rounded-full mx-auto" /> : null;
+
   const handleGetStarted = () => {
+    console.log('Button clicked, role:', role);
     if (role === "kid") {
-      router.push("/kid/dashboard");
+      const url = `/onboarding/mascot?nickname=${encodeURIComponent(nickname)}&avatar=${encodeURIComponent(avatar)}`;
+      console.log('Navigating to:', url);
+      router.push(url);
     } else {
       router.push("/parent-app");
     }
@@ -33,8 +36,20 @@ export default function OnboardingSuccess() {
         </header>
 
         <div className="p-8 text-center mb-8">
-          <div className="text-8xl mb-6">{avatars}</div>
+          {avatar && (
+            <div className="relative w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden border-4 border-[#1F4E79] shadow-lg hover:scale-105 transition-transform">
+              <Image
+                src={avatar}
+                alt="User Avatar"
+                fill
+                className="object-contain rounded-full"
+              />
+            </div>
+          )}
           
+          <div className="text-4xl mb-4 animate-pulse">🎉</div>
+          
+      
           <h1 className="text-3xl font-extrabold font-['Baloo_2'] text-black mb-4">
             Profile Created!
           </h1>
@@ -54,8 +69,9 @@ export default function OnboardingSuccess() {
         </div>
 
         <button
+          type="button"
           onClick={handleGetStarted}
-          className="w-full py-4 rounded-xl font-bold text-white bg-[#AD1F23] hover:shadow-lg transition-all"
+          className="w-full py-4 rounded-xl font-bold text-white bg-[#AD1F23] hover:bg-[#8B1A1D] hover:shadow-lg transition-all duration-300 transform hover:scale-105 active:scale-95"
         >
           {role === "kid" ? "Yes! Let's start!" : "Go to Dashboard"}
         </button>
