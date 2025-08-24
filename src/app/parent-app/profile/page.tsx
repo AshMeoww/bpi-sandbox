@@ -1,63 +1,56 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import BottomNavigation from "../../../components/shared/BottomNavigation";
 import Logo from "../../../components/shared/Logo";
+import { TaskStore, Task } from "../../../lib/taskStore";
+import { BalanceStore } from "../../../lib/balanceStore";
+import { UserStore } from "../../../lib/userStore";
 
 export default function ParentProfile() {
   const [email, setEmail] = useState("");
   const [showEmailSent, setShowEmailSent] = useState(false);
+  const [tasks, setTasks] = useState<Task[]>([]);
 
+  useEffect(() => {
+    const updateTasks = () => {
+      setTasks(TaskStore.getTasks());
+    };
+    
+    updateTasks();
+    window.addEventListener('tasks-updated', updateTasks);
+    return () => window.removeEventListener('tasks-updated', updateTasks);
+  }, []);
+
+  const userData = UserStore.getUserData();
+  
   const profileData = {
-    name: "Maria",
-    childName: "Alex",
+    name: userData.nickname,
+    childName: userData.nickname,
     joinDate: "2024-01-10",
     childAge: 10,
     childLevel: 3,
   };
 
+  const completedTasks = tasks.filter(t => t.status === 'completed');
+  const totalEarned = completedTasks.reduce((sum, t) => sum + t.reward, 0);
+  
   const activitySummary = {
-    totalEarned: 245.5,
-    totalSpent: 120.0,
-    tasksCompleted: 12,
+    totalEarned: totalEarned,
+    totalSpent: 0,
+    tasksCompleted: completedTasks.length,
     quizzesCompleted: 8,
     badgesEarned: 3,
     daysActive: 15,
   };
 
-  const recentTransactions = [
-    {
-      type: "deposit",
-      amount: 25,
-      description: "Task: Clean Room",
-      date: "2024-01-15",
-    },
-    {
-      type: "deposit",
-      amount: 15,
-      description: "Quiz: Money Basics",
-      date: "2024-01-14",
-    },
-    {
-      type: "withdrawal",
-      amount: 5,
-      description: "Candy Store",
-      date: "2024-01-13",
-    },
-    {
-      type: "deposit",
-      amount: 20,
-      description: "Weekly Allowance",
-      date: "2024-01-12",
-    },
-    {
-      type: "deposit",
-      amount: 30,
-      description: "Birthday Gift",
-      date: "2024-01-11",
-    },
-  ];
+  const recentTransactions = completedTasks.slice(0, 5).map(task => ({
+    type: "deposit" as const,
+    amount: task.reward,
+    description: `Task: ${task.title}`,
+    date: task.assignedDate,
+  }));
 
   const handleSendReceipt = () => {
     if (!email) return;
@@ -86,10 +79,11 @@ export default function ParentProfile() {
           <div className="flex items-center space-x-4 mb-4">
             <div className="w-16 h-16  rounded-full flex items-center justify-center">
               <Image
-                src="/BPI assets/sandbox.png"
+                src={userData.avatar}
                 alt="Parent"
                 width={64}  
                 height={64}
+                className="rounded-full"
               />
             </div>
             <div>
@@ -124,7 +118,7 @@ export default function ParentProfile() {
         {/* Activity Summary */}
         <div className="bg-[#264653] rounded-2xl shadow-xl p-4 mb-4">
           <h3 className="text-lg font-bold text-white mb-4">
-            {profileData.childName}'s Summary
+            {userData.nickname}'s Summary
           </h3>
           <div className="grid grid-cols-2 gap-3">
             <div className="text-center p-3 bg-[#ADFFBE] rounded-xl">
@@ -194,7 +188,7 @@ export default function ParentProfile() {
             Send Monthly Report
           </h3>
           <p className="text-sm text-gray-600 mb-4">
-            Get a detailed summary of {profileData.childName}'s learning progress and financial activity
+            Get a detailed summary of {userData.nickname}'s learning progress and financial activity
           </p>
           <div className="space-y-3">
             <input
@@ -226,7 +220,7 @@ export default function ParentProfile() {
           { href: "/parent-app", icon: "/BPI assets/beige-home.png", label: "Home" },
           { href: "/parent-app/monitor", icon: "/BPI assets/list.png", label: "Monitor" },
           { href: "/parent-app/rewards", icon: "/BPI assets/beige-piggy-bank.png", label: "Rewards" },
-          { href: "/parent-app/profile", icon: "/BPI assets/beige-home.png", label: "Profile", isActive: true }
+          { href: "/parent-app/profile", icon: UserStore.getUserData().avatar, label: "Profile", isActive: true, isAvatar: true }
         ]}
       />
     </div>

@@ -6,6 +6,7 @@ type NavItem = {
   icon: string;
   label: string;
   isActive?: boolean;
+  isAvatar?: boolean;
 };
 
 type BottomNavigationProps = {
@@ -25,12 +26,13 @@ export default function BottomNavigation({ items }: BottomNavigationProps) {
                 item.isActive ? "text-white" : "text-white/80"
               }`}
             >
-              <div className="w-6 h-6 mb-1">
+              <div className={`mb-1 ${item.isAvatar ? 'w-8 h-8' : 'w-6 h-6'}`}>
                 <Image
                   src={item.icon}
                   alt={item.label}
-                  width={24}
-                  height={24}
+                  width={item.isAvatar ? 32 : 24}
+                  height={item.isAvatar ? 32 : 24}
+                  className={item.isAvatar ? 'rounded-full border-2 border-white/50' : ''}
                 />
               </div>
               <span className={`text-xs ${item.isActive ? "font-bold" : "font-medium"}`}>

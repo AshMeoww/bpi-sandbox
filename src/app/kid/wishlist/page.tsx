@@ -1,32 +1,46 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import BottomNavigation from "../../../components/shared/BottomNavigation";
 import Logo from "../../../components/shared/Logo";
 import Image from "next/image";
+import { WishlistStore, WishlistItem } from "../../../lib/wishlistStore";
+import { BalanceStore } from "../../../lib/balanceStore";
+import { UserStore } from "../../../lib/userStore";
 
 export default function Wishlist() {
-  const [balance] = useState(50.0);
-  const [wishlist] = useState([
-    {
-      id: 1,
-      item: "New Bike",
-      price: 2500,
-      saved: balance,
-      icon: "",
-      priority: "high",
-      image: "/BPI assets/bicycle.png"
-    },
-    {
-      id: 2,
-      item: "Jelly Cat", 
-      price: 1200,
-      saved: 0,
-      icon: "",
-      priority: "medium",
-      image: "/BPI assets/jellycat.png"
-    }
-  ]);
+  const [balance, setBalance] = useState(50.0);
+  const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
+  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({ name: "", amount: "", photo: "" });
+
+  useEffect(() => {
+    setBalance(BalanceStore.getBalance());
+    setWishlist(WishlistStore.getWishlist());
+    
+    const handleWishlistUpdate = () => setWishlist(WishlistStore.getWishlist());
+    const handleBalanceUpdate = () => setBalance(BalanceStore.getBalance());
+    
+    window.addEventListener('wishlist-updated', handleWishlistUpdate);
+    window.addEventListener('balance-updated', handleBalanceUpdate);
+    return () => {
+      window.removeEventListener('wishlist-updated', handleWishlistUpdate);
+      window.removeEventListener('balance-updated', handleBalanceUpdate);
+    };
+  }, []);
+
+  const handleAddWish = () => {
+    if (!formData.name.trim() || !formData.amount || Number(formData.amount) <= 0) return;
+    
+    WishlistStore.addWishlistItem({
+      name: formData.name.trim(),
+      amount: Number(formData.amount),
+      photo: formData.photo || "/BPI assets/bicycle.png"
+    });
+    
+    setFormData({ name: "", amount: "", photo: "" });
+    setShowForm(false);
+  };
 
   return (
     <div
@@ -51,102 +65,135 @@ export default function Wishlist() {
         </header>
 
         <div className="mb-4 flex justify-end">
-          <button className="bg-[#AD1F23] rounded-full px-4 py-2 text-white font-semibold shadow-lg transition-colors flex items-center gap-2">
+          <button 
+            onClick={() => setShowForm(true)}
+            className="bg-[#AD1F23] rounded-full px-4 py-2 text-white font-semibold shadow-lg transition-colors flex items-center gap-2 hover:bg-[#8B1A1D]"
+          >
             <span className="text-xl">+</span>
             <span>Add Wishlist</span>
           </button>
         </div>
 
+        {/* Add Wishlist Form Modal */}
+        {showForm && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-2xl p-6 w-full max-w-sm">
+              <h2 className="text-xl font-bold text-gray-800 mb-4">Add New Wish</h2>
+              <div className="space-y-4">
+                <input
+                  type="text"
+                  placeholder="What do you want?"
+                  value={formData.name}
+                  onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  className="w-full p-3 border-2 border-gray-200 rounded-xl focus:border-purple-400 focus:outline-none text-black"
+                />
+                <input
+                  type="number"
+                  placeholder="How much does it cost?"
+                  value={formData.amount}
+                  onChange={(e) => setFormData({...formData, amount: e.target.value})}
+                  className="w-full p-3 border-2 border-gray-200 rounded-xl focus:border-purple-400 focus:outline-none text-black"
+                />
+                <input
+                  type="text"
+                  placeholder="Photo URL (optional)"
+                  value={formData.photo}
+                  onChange={(e) => setFormData({...formData, photo: e.target.value})}
+                  className="w-full p-3 border-2 border-gray-200 rounded-xl focus:border-purple-400 focus:outline-none text-black"
+                />
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setShowForm(false)}
+                    className="flex-1 py-3 rounded-xl font-bold text-gray-600 bg-gray-200 hover:bg-gray-300 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleAddWish}
+                    className="flex-1 py-3 rounded-xl font-bold text-white bg-[#AD1F23] hover:bg-[#8B1A1D] transition-colors"
+                  >
+                    Add Wish
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Wishlist Items */}
         <div className="space-y-4">
-          {wishlist.map((item) => (
-            <div key={item.id} className="bg-[#1F4E79] backdrop-blur-md rounded-2xl shadow-xl p-4 relative">
-              <div className="flex flex-col relative z-10">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center space-x-3">
-                    <div className="text-3xl">{item.icon}</div>
-                    <div>
-                      <h3 className="font-bold text-white text-2xl">{item.item}</h3>
-                      <div className="flex items-center space-x-2">
-                        <span className="text-2xl font-black text-white">
-                          ₱{item.price}
-                        </span>
-                        <span
-                          className={`px-2 py-1 rounded-full text-xs font-bold ${
-                            item.priority === "high"
-                              ? "bg-red-100 text-red-600"
-                              : item.priority === "medium"
-                              ? "bg-yellow-100 text-yellow-600"
-                              : "bg-green-100 text-green-600"
-                          }`}
-                        >
-                          {item.priority}
-                        </span>
+          {wishlist.length === 0 ? (
+            <div className="text-center py-8">
+              <p className="text-gray-600 text-lg">No wishes yet!</p>
+              <p className="text-gray-500 text-sm">Add your first wish to start saving!</p>
+            </div>
+          ) : (
+            wishlist.map((item) => (
+              <div key={item.id} className="bg-[#1F4E79] backdrop-blur-md rounded-2xl shadow-xl p-4 relative">
+                <div className="flex flex-col relative z-10">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center space-x-3">
+                      <div>
+                        <h3 className="font-bold text-white text-2xl">{item.name}</h3>
+                        <div className="flex items-center space-x-2">
+                          <span className="text-2xl font-black text-white">
+                            ₱{item.amount}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-2xl font-black text-white">
+                        {Math.round((balance / item.amount) * 100)}%
                       </div>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-2xl font-black text-white">
-                      {Math.round((item.saved / item.price) * 100)}%
-                    </div>
-                  </div>
-                </div>
 
-                <div className="w-full rounded-lg overflow-hidden mb-4">
-                  <Image 
-                    src={item.image}
-                    alt={item.item}
-                    width={400}
-                    height={400}
-                    className="w-full h-auto object-contain"
-                  />
-                </div>
+                  <div className="w-full rounded-lg overflow-hidden mb-4">
+                    <Image 
+                      src={item.photo}
+                      alt={item.name}
+                      width={400}
+                      height={400}
+                      className="w-full h-auto object-contain"
+                    />
+                  </div>
 
-                <div className="mb-3">
-                  <div className="flex justify-between text-xs text-white mb-1">
-                    <span>₱{item.saved} saved</span>
-                    <span>₱{item.price - item.saved} to go</span>
+                  <div className="mb-3">
+                    <div className="flex justify-between text-xs text-white mb-1">
+                      <span>₱{balance} saved</span>
+                      <span>₱{Math.max(0, item.amount - balance)} to go</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                      <div
+                        className="bg-gradient-to-r from-[#D5B527] to-purple-500 h-3 rounded-full transition-all duration-500"
+                        style={{
+                          width: `${Math.min((balance / item.amount) * 100, 100)}%`,
+                        }}
+                      ></div>
+                    </div>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-                    <div
-                      className="bg-gradient-to-r from-[#D5B527] to-purple-500 h-3 rounded-full transition-all duration-500"
-                      style={{
-                        width: `${Math.min(
-                          (item.saved / item.price) * 100,
-                          100
-                        )}%`,
-                      }}
-                    ></div>
-                  </div>
-                </div>
 
-                {item.saved > 0 ? (
-                  <div className="bg-green-50/80 backdrop-blur-sm border border-green-200 rounded-xl p-3">
-                    <div className="text-sm font-bold text-green-800">
-                      Great progress! 🎉
+                  {balance >= item.amount ? (
+                    <div className="bg-green-50/80 backdrop-blur-sm border border-green-200 rounded-xl p-3">
+                      <div className="text-sm font-bold text-green-800">
+                        You can buy this now! 🎉
+                      </div>
                     </div>
-                    <div className="text-xs text-green-600">
-                      {item.saved >= item.price
-                        ? "You can buy this now!"
-                        : `Save ₱${Math.ceil(
-                            (item.price - item.saved) / 4
-                          )} per week to get this in a month!`}
+                  ) : (
+                    <div className="bg-blue-50/80 backdrop-blur-sm border border-blue-200 rounded-xl p-3">
+                      <div className="text-sm font-bold text-blue-800">
+                        Keep saving! 💪
+                      </div>
+                      <div className="text-xs text-blue-600">
+                        You need ₱{item.amount - balance} more!
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  <div className="bg-blue-50/80 backdrop-blur-sm border border-blue-200 rounded-xl p-3">
-                    <div className="text-sm font-bold text-blue-800">
-                      Start saving! 💪
-                    </div>
-                    <div className="text-xs text-blue-600">
-                      Save ₱{Math.ceil(item.price / 20)} per week to get this in 5
-                      months!
-                    </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
 
@@ -170,8 +217,9 @@ export default function Wishlist() {
           },
           {
             href: "/kid/profile",
-            icon: "/BPI assets/beige-home.png",
+            icon: UserStore.getUserData().avatar,
             label: "Profile",
+            isAvatar: true,
           },
         ]}
       />

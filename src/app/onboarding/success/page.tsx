@@ -2,6 +2,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import Logo from "../../../components/shared/Logo";
 import Image from "next/image";
+import { UserStore } from "../../../lib/userStore";
 
 
 export default function OnboardingSuccess() {
@@ -12,11 +13,11 @@ export default function OnboardingSuccess() {
   const avatar = searchParams.get("avatar") || "";
 
   const handleGetStarted = () => {
-    console.log('Button clicked, role:', role);
+    // Save user data to store
+    UserStore.saveUserData({ nickname, avatar, role });
+    
     if (role === "kid") {
-      const url = `/onboarding/mascot?nickname=${encodeURIComponent(nickname)}&avatar=${encodeURIComponent(avatar)}`;
-      console.log('Navigating to:', url);
-      router.push(url);
+      router.push("/onboarding/mascot");
     } else {
       router.push("/parent-app");
     }

@@ -2,13 +2,15 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { TaskStore, Task } from "../../../lib/taskStore";
+import { BalanceStore } from "../../../lib/balanceStore";
+import { UserStore } from "../../../lib/userStore";
 import BottomNavigation from "../../../components/shared/BottomNavigation";
 import BalanceCard from "../../../components/kid/BalanceCard";
 import Logo from "../../../components/shared/Logo";
 import Image from "next/image";
 
 export default function Dashboard() {
-  const [kidName] = useState("Alex");
+  const [kidName, setKidName] = useState("Alex");
   const [balance, setBalance] = useState(50.0);
   const [level] = useState(3);
   const [xp] = useState(250);
@@ -16,14 +18,25 @@ export default function Dashboard() {
   const [assignedTasks, setAssignedTasks] = useState<Task[]>([]);
 
   useEffect(() => {
+    const userData = UserStore.getUserData();
+    setKidName(userData.nickname);
+    setBalance(BalanceStore.getBalance());
     setAssignedTasks(TaskStore.getTasks());
 
     const handleTasksUpdate = () => {
       setAssignedTasks(TaskStore.getTasks());
     };
 
+    const handleBalanceUpdate = () => {
+      setBalance(BalanceStore.getBalance());
+    };
+
     window.addEventListener("tasks-updated", handleTasksUpdate);
-    return () => window.removeEventListener("tasks-updated", handleTasksUpdate);
+    window.addEventListener("balance-updated", handleBalanceUpdate);
+    return () => {
+      window.removeEventListener("tasks-updated", handleTasksUpdate);
+      window.removeEventListener("balance-updated", handleBalanceUpdate);
+    };
   }, []);
 
   const newTasksCount = assignedTasks.filter((t) => t.isNew).length;
@@ -42,6 +55,23 @@ export default function Dashboard() {
             </Link>
           </div>
           <div className=" sm:p-2 mb-4 sm:mb-1">
+            {/* New Task Notification */}
+        {newTasksCount > 0 && (
+          <div className="mb-4 bg-[#FFD103] text-white rounded-2xl p-4 shadow-xl">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="font-bold text-lg">New Task Assigned! 🎉</h3>
+                <p className="text-sm opacity-90">
+                  {newTasksCount} new task{newTasksCount > 1 ? "s" : ""} from
+                  your parent
+                </p>
+              </div>
+              <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                <div className="w-6 h-6 bg-white rounded-full"></div>
+              </div>
+            </div>
+          </div>
+        )}
             <h1 className="text-3xl sm:text-5xl  text-black mb-2 tracking-tight text-left font-['Baloo_2'] font-extrabold">
               Hi, {kidName}!{" "}
             </h1>
@@ -74,23 +104,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* New Task Notification */}
-        {newTasksCount > 0 && (
-          <div className="mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-2xl p-4 shadow-xl">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="font-bold text-lg">New Task Assigned! 🎉</h3>
-                <p className="text-sm opacity-90">
-                  {newTasksCount} new task{newTasksCount > 1 ? "s" : ""} from
-                  your parent
-                </p>
-              </div>
-              <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                <div className="w-6 h-6 bg-white rounded-full"></div>
-              </div>
-            </div>
-          </div>
-        )}
+        
       </div>
 
       <BottomNavigation
@@ -113,8 +127,9 @@ export default function Dashboard() {
           },
           {
             href: "/kid/profile",
-            icon: "/BPI assets/beige-home.png",
+            icon: UserStore.getUserData().avatar,
             label: "Profile",
+            isAvatar: true,
           },
         ]}
       />

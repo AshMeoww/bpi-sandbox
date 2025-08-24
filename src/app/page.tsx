@@ -56,78 +56,78 @@ export default function Landing() {
         {/* Features Grid */}
         <div className="relative z-10 px-4 sm:px-6 mt-28">
         <div className="grid gap-6 sm:gap-8 mb-12 sm:mb-16">
-          <div className="bg-[#264653] backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8">
+          <div className="bg-[#264653] backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-xl">
             <div className="w-12 h-12 sm:w-16 sm:h-16  rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6">
               <Image
                 src="/BPI assets/BPI landing page assets/assets/dual interface.png"
                 alt="Dual Interface Icon"
-                width={44}
-                height={44}
+                width={50}
+                height={50}
               />
             </div>
             <h3 className="text-xl sm:text-2xl font-semibold font-['Baloo_2'] text-white mb-3 sm:mb-4">Dual Interface</h3>
             <p className="text-white/80 text-sm sm:text-base font-['Public_Sans']">Separate views for kids and parents with real-time monitoring.</p>
           </div>
 
-          <div className="bg-[#264653] backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8">
+          <div className="bg-[#264653] backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-xl">
             <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6">
               <Image
                 src="/BPI assets/BPI landing page assets/assets/Interactive onboarding.png"
                 alt="Interactive Onboarding Icon"
-                width={44}
-                height={44}
+                width={50}
+                height={50}
               />
             </div>
             <h3 className="text-xl sm:text-2xl font-semibold font-['Baloo_2'] text-white mb-3 sm:mb-4">Interactive Onboarding</h3>
             <p className="text-white/80 text-sm sm:text-base font-['Public_Sans']">Personalized setup based on goals like "save for a bike".</p>
           </div>
 
-          <div className="bg-[#264653] backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8">
+          <div className="bg-[#264653] backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-xl">
             <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6">
               <Image
                 src="/BPI assets/BPI landing page assets/assets/Gamified Tasks.png"
                 alt="Gamified Tasks Icon"
-                width={44}
-                height={44}
+                width={50}
+                height={50}
               />
             </div>
             <h3 className="text-xl sm:text-2xl font-semibold font-['Baloo_2'] text-white mb-3 sm:mb-4">Gamified Tasks</h3>
             <p className="text-white/80 text-sm sm:text-base font-['Public_Sans']">Earn through chores, quizzes, and fun milestones.</p>
           </div>
 
-          <div className="bg-[#264653] backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8">
+          <div className="bg-[#264653] backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-xl">
             <div className="w-12 h-12 sm:w-16 sm:h-16  rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6">
               <Image
                 src="/BPI assets/BPI landing page assets/assets/AI Guidance.png"
                 alt="AI Guidance Icon"
-                width={44}
-                height={44}
+                width={50}
+                height={50}
               />
             </div>
             <h3 className="text-xl sm:text-2xl font-semibold font-['Baloo_2'] text-white mb-3 sm:mb-4">AI Guidance</h3>
             <p className="text-white/80 text-sm sm:text-base font-['Public_Sans']">Smart tips: "Saving ₱50 weekly = ₱2,600 yearly".</p>
           </div>
 
-          <div className="bg-[#264653] backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8">
+          <div className="bg-[#264653] backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-xl">
             <div className="w-12 h-12 sm:w-16 sm:h-16  rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6">
               <Image
                 src="/BPI assets/BPI landing page assets/assets/Learning Cards.png"
                 alt="Learning Cards Icon"
-                width={44}
-                height={44}
+                width={50}
+                height={50}
               />
             </div>
             <h3 className="text-xl sm:text-2xl font-semibold font-['Baloo_2'] text-white mb-3 sm:mb-4">Learning Cards</h3>
             <p className="text-white/80 text-sm sm:text-base font-['Public_Sans']">Interactive lessons on budgeting and needs vs. wants.</p>
           </div>
 
-          <div className="bg-[#264653] backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8">
+          <div className="bg-[#264653] backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-xl">
             <div className="w-12 h-12 sm:w-16 sm:h-16  rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6">
               <Image
                 src="/BPI assets/BPI landing page assets/assets/Safe Environment.png"
                 alt="Safe Environment Icon"
-                width={44}
-                height={44}
+                width={50}
+                height={50}
               />
             </div>
             <h3 className="text-xl sm:text-2xl font-semibold font-['Baloo_2'] text-white mb-3 sm:mb-4">Safe Environment</h3>
@@ -136,7 +136,7 @@ export default function Landing() {
         </div>
 
         {/* Value Proposition */}
-        <div className="bg-[#7F0407] backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 mb-8 mt-26">
+        <div className="bg-[#7F0407] backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 mb-8 mt-26 shadow-xl">
           <div className="text-center mb-6">
             <h2 className="text-xl sm:text-2xl font-semibold font-['Baloo_2'] text-white mb-3">Building Tomorrow's BPI Customers</h2>
             <p className="text-white/80 text-sm sm:text-base font-['Public_Sans']">
@@ -185,7 +185,7 @@ export default function Landing() {
         </div>
 
         {/* CTA Section */}
-        <div className="bg-[#F2F0EF] backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-12 text-center mt-16">
+        <div className="bg-[#F2F0EF] backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-12 text-center mt-16 shadow-xl">
           <h2 className="text-2xl sm:text-4xl font-semibold font-['Baloo_2'] text-[#264653] text-center mb-4 sm:mb-6">Start Learning Today</h2>
           <p className="text-base sm:text-xl font-['Public_Sans'] text-[#264653] mb-6 sm:mb-8">Join the financial learning playground that prepares kids for real banking.</p>
           <div className="flex flex-col gap-3 sm:gap-4">

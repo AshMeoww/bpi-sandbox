@@ -1,17 +1,43 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import BottomNavigation from "../../../components/shared/BottomNavigation";
 import Logo from "../../../components/shared/Logo";
+import { TaskStore, Task } from "../../../lib/taskStore";
+import { BalanceStore } from "../../../lib/balanceStore";
+import { UserStore } from "../../../lib/userStore";
 
 export default function Monitor() {
-  const [kidName] = useState("Alex");
-  const [currentBalance] = useState(70);
-  const [dailyAchievements] = useState([
-    { badge: "Math Whiz", task: "Completed Money Quiz", date: "Today" },
-    { badge: "Saver Star", task: "Saved ₱20", date: "Today" },
-    { badge: "Task Master", task: "Cleaned Room", date: "Today" }
-  ]);
+  const [kidName, setKidName] = useState("Alex");
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [completedTasks, setCompletedTasks] = useState<Task[]>([]);
+  const [kidBalance, setKidBalance] = useState(0);
+
+  useEffect(() => {
+    const userData = UserStore.getUserData();
+    setKidName(userData.nickname);
+    
+    const updateData = () => {
+      const allTasks = TaskStore.getTasks();
+      setTasks(allTasks);
+      setCompletedTasks(allTasks.filter(t => t.status === 'completed'));
+      setKidBalance(BalanceStore.getBalance());
+    };
+    
+    updateData();
+    window.addEventListener('tasks-updated', updateData);
+    window.addEventListener('balance-updated', updateData);
+    return () => {
+      window.removeEventListener('tasks-updated', updateData);
+      window.removeEventListener('balance-updated', updateData);
+    };
+  }, []);
+
+  const dailyAchievements = completedTasks.slice(0, 3).map((task, index) => ({
+    badge: task.badge || "Task Master",
+    task: task.title,
+    date: "Today"
+  }));
   const [wishlistGoals] = useState([
     { item: "Bike", cost: 100, saved: 70 },
     { item: "Video Game", cost: 50, saved: 30 },
@@ -35,8 +61,8 @@ export default function Monitor() {
           <div className="flex items-center gap-4">
             <img src="/BPI assets/avatars/Girl w yellow bg.png" alt="Piggy Bank" className="w-20 h-20" />
             <div>
-              <h3 className="text-lg font-semibold font-['Baloo_2'] text-black mb-2">{kidName}'s current balance is </h3>
-              <div className="text-4xl font-extrabold font-[Public_Sans] text-black">PHP {currentBalance}</div>
+              <h3 className="text-lg font-semibold font-['Baloo_2'] text-black mb-2">{kidName}'s Balance: ₱{kidBalance.toFixed(2)}</h3>
+              <div className="text-4xl font-extrabold font-[Public_Sans] text-black">Completed: {completedTasks.length}</div>
             </div>
           </div>
         </div>
@@ -108,7 +134,7 @@ export default function Monitor() {
           { href: "/parent-app", icon: "/BPI assets/beige-home.png", label: "Home" },
           { href: "/parent-app/monitor", icon: "/BPI assets/list.png", label: "Monitor", isActive: true },
           { href: "/parent-app/rewards", icon: "/BPI assets/beige-piggy-bank.png", label: "Rewards" },
-          { href: "/parent-app/profile", icon: "/BPI assets/beige-home.png", label: "Profile" }
+          { href: "/parent-app/profile", icon: UserStore.getUserData().avatar, label: "Profile", isAvatar: true }
         ]}
       />
     </div>

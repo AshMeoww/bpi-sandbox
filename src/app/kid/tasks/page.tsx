@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { TaskStore, Task as AssignedTask } from "../../../lib/taskStore";
+import { BalanceStore } from "../../../lib/balanceStore";
+import { UserStore } from "../../../lib/userStore";
 import BottomNavigation from "../../../components/shared/BottomNavigation";
 import Logo from "../../../components/shared/Logo";
 import Image from "next/image";
@@ -46,6 +48,21 @@ export default function Tasks() {
     setScore(0);
   };
 
+  const markTaskAsRead = (taskId: number) => {
+    TaskStore.updateTask(taskId, { isNew: false });
+  };
+
+  useEffect(() => {
+    // Mark new tasks as read after 3 seconds
+    const newTasks = assignedTasks.filter(t => t.isNew);
+    if (newTasks.length > 0) {
+      const timer = setTimeout(() => {
+        newTasks.forEach(task => markTaskAsRead(task.id));
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [assignedTasks]);
+
   const handleQuizAnswer = (answerIndex: number) => {
     if (answerIndex === quizQuestions[quizStep].correct) {
       setScore(score + 1);
@@ -77,6 +94,7 @@ export default function Tasks() {
   const totalEarned = tasks.filter(t => t.completed).reduce((sum, t) => sum + t.reward, 0);
   const availableTasks = tasks.filter(t => !t.completed);
   const pendingAssignedTasks = assignedTasks.filter(t => t.status === 'pending');
+  const completedAssignedTasks = assignedTasks.filter(t => t.status === 'completed');
 
   return (
     <div className="min-h-screen bg-cover bg-center bg-no-repeat pb-20" style={{backgroundImage: "url('/BPI assets/kids-dashboard-bg.png')"}}>
@@ -93,37 +111,79 @@ export default function Tasks() {
           </div>
         </header>
 
-        {/* Example task card */}
-        <div>
-          <div className="bg-white rounded-2xl shadow-xl p-4 relative">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4 flex-1">
-                <div className="relative z-10">
-                  <h3 className="font-semibold font-['Baloo_2'] text-gray-800 text-2xl">Sweep floor</h3>
-                  <p className="text-sm text-gray-600 font['Public_Sans']">Sweep the entire floor of your room</p>
-                  <div className="flex flex-col space-y-2 mt-2">
-                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-green-500 text-white w-fit">
-                      DAILY
-                    </span>
-                    <span className="text-green-600 font-['Public_Sans']">Earn: ₱200</span>
+        {/* Assigned Tasks from Parent */}
+        {pendingAssignedTasks.length > 0 && (
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">New Tasks from Parent!</h2>
+            {pendingAssignedTasks.map((task) => (
+              <div key={task.id} className="bg-[#FFD103] rounded-2xl shadow-xl p-4 mb-4 relative">
+                {task.isNew && (
+                  <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full animate-pulse">
+                    NEW!
+                  </div>
+                )}
+                <div className="flex items-center justify-between">
+                  <div className="flex-1">
+                    <h3 className="font-semibold font-['Baloo_2'] text-gray-800 text-2xl">{task.title}</h3>
+                    <div className="flex flex-col space-y-2 mt-2">
+                      <span className="px-3 py-1 rounded-full text-xs font-bold bg-blue-500 text-white w-fit">
+                        FROM PARENT
+                      </span>
+                      <span className="text-green-600 font-['Public_Sans'] font-bold">Earn: ₱{task.reward}</span>
+                      {task.badge && (
+                        <span className="text-purple-600 font-['Public_Sans'] text-sm">+ {task.badge} Badge</span>
+                      )}
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => {
+                      TaskStore.updateTask(task.id, { status: 'completed', isNew: false });
+                      BalanceStore.addToBalance(task.reward);
+                    }}
+                    className="bg-green-500 text-white px-4 py-2 rounded-xl font-bold hover:bg-green-600 transition-colors"
+                  >
+                    Complete!
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Completed Tasks */}
+        {completedAssignedTasks.length > 0 && (
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">Completed Tasks</h2>
+            {completedAssignedTasks.map((task) => (
+              <div key={task.id} className="bg-green-100 rounded-2xl shadow-xl p-4 mb-4 relative">
+                <div className="flex items-center justify-between">
+                  <div className="flex-1">
+                    <h3 className="font-semibold font-['Baloo_2'] text-gray-800 text-2xl">{task.title}</h3>
+                    <div className="flex flex-col space-y-2 mt-2">
+                      <span className="px-3 py-1 rounded-full text-xs font-bold bg-green-500 text-white w-fit font-['Baloo_2']">
+                        COMPLETED ✓
+                      </span>
+                      <span className="text-green-600 font-['Public_Sans'] font-bold">Earned: ₱{task.reward}</span>
+                      {task.badge && (
+                        <span className="text-purple-600 font-['Public_Sans'] text-sm">+ {task.badge} Badge</span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Image 
+                      src="/BPI assets/staar.png"
+                      alt="pink star"
+                      width={60}
+                      height={60}
+                      className="animate-pulse"
+                    />
+                    
                   </div>
                 </div>
               </div>
-              
-              <div className="flex items-center gap-4">
-                <button className="absolute right-0 top-0 cursor-pointer transform transition-transform hover:scale-110">
-                  <Image 
-                    src="/BPI assets/staar.png"
-                    alt="pink star"
-                    width={120}
-                    height={120}
-                    className="animate-pulse"
-                  />
-                </button>
-              </div>
-            </div>
+            ))}
           </div>
-        </div>
+        )}
 
       </div>
 
@@ -132,7 +192,7 @@ export default function Tasks() {
           { href: "/kid/dashboard", icon: "/BPI assets/beige-home.png", label: "Home" },
           { href: "/kid/tasks", icon: "/BPI assets/beige-piggy-bank.png", label: "Tasks", isActive: true },
           { href: "/kid/wishlist", icon: "/BPI assets/beige-star.png", label: "Wishlist" },
-          { href: "/kid/profile", icon: "/BPI assets/beige-home.png", label: "Profile" }
+          { href: "/kid/profile", icon: UserStore.getUserData().avatar, label: "Profile", isAvatar: true }
         ]}
       />
     </div>
