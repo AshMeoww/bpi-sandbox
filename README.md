@@ -81,5 +81,6 @@ Clone the repository:
 ```bash
 git clone https://github.com/AshMeoww/bpi-sandbox.git
 cd sandbox
+npm install
 npm run dev
 
