@@ -84,7 +84,7 @@ export default function Profile() {
         </header>
 
         {/* Profile Status */}
-        <div className="bg-[#FFD103] rounded-2xl shadow-xl p-4 mb-4">
+        <div className="bg-white rounded-2xl shadow-xl p-4 mb-4">
           <div className="flex items-center space-x-4 mb-4">
             <div className="w-16 h-16  rounded-full flex items-center justify-center">
               <Image
@@ -108,13 +108,13 @@ export default function Profile() {
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <div className="bg-purple-50 rounded-xl p-3">
+            <div className="bg-[#E984FF] rounded-xl p-3">
               <div className="text-2xl font-bold text-purple-600">
                 ₱{profileData.balance}
               </div>
               <div className="text-xs text-purple-700">Current Balance</div>
             </div>
-            <div className="bg-orange-50 rounded-xl p-3">
+            <div className="bg-[#FFD06B] rounded-xl p-3">
               <div className="text-2xl font-bold text-orange-600">
                 {profileData.xp} XP
               </div>
@@ -124,30 +124,30 @@ export default function Profile() {
         </div>
 
         {/* Activity Summary */}
-        <div className="bg-[#FF9E1D] rounded-2xl shadow-xl p-4 mb-4">
-          <h3 className="text-lg font-bold text-[#1F4E79] mb-4">
+        <div className="bg-[#264653] rounded-2xl shadow-xl p-4 mb-4">
+          <h3 className="text-lg font-bold text-white mb-4">
             Activity Summary
           </h3>
           <div className="grid grid-cols-2 gap-3">
-            <div className="text-center p-3 bg-green-50 rounded-xl">
+            <div className="text-center p-3 bg-[#6BFF8B] rounded-xl">
               <div className="text-xl font-bold text-green-600">
                 ₱{activitySummary.totalEarned}
               </div>
               <div className="text-xs text-green-700">Total Earned</div>
             </div>
-            <div className="text-center p-3 bg-red-50 rounded-xl">
+            <div className="text-center p-3 bg-[#FF6B6D] rounded-xl">
               <div className="text-xl font-bold text-red-600">
                 ₱{activitySummary.totalSpent}
               </div>
               <div className="text-xs text-red-700">Total Spent</div>
             </div>
-            <div className="text-center p-3 bg-blue-50 rounded-xl">
+            <div className="text-center p-3 bg-[#6B95FF]  rounded-xl">
               <div className="text-xl font-bold text-blue-600">
                 {activitySummary.tasksCompleted}
               </div>
               <div className="text-xs text-blue-700">Tasks Done</div>
             </div>
-            <div className="text-center p-3 bg-yellow-50 rounded-xl">
+            <div className="text-center p-3 bg-[#F5FF6B] rounded-xl">
               <div className="text-xl font-bold text-yellow-600">
                 {activitySummary.badgesEarned}
               </div>

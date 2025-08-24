@@ -101,8 +101,8 @@ export default function Tasks() {
                 <div className="relative z-10">
                   <h3 className="font-semibold font-['Baloo_2'] text-gray-800 text-2xl">Sweep floor</h3>
                   <p className="text-sm text-gray-600 font['Public_Sans']">Sweep the entire floor of your room</p>
-                  <div className="flex items-center space-x-2 mt-2">
-                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-green-500 text-white">
+                  <div className="flex flex-col space-y-2 mt-2">
+                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-green-500 text-white w-fit">
                       DAILY
                     </span>
                     <span className="text-green-600 font-['Public_Sans']">Earn: ₱200</span>

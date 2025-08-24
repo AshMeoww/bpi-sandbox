@@ -5,6 +5,8 @@ import BottomNavigation from "../../../components/shared/BottomNavigation";
 import Logo from "../../../components/shared/Logo";
 
 export default function ParentProfile() {
+  const [parentName] = useState("Maria");
+  const [kidName] = useState("Alex");
   const [email, setEmail] = useState("");
   const [showEmailSent, setShowEmailSent] = useState(false);
 
@@ -51,8 +53,8 @@ export default function ParentProfile() {
             <Logo />
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4">
-            <h1 className="text-2xl font-bold text-white mb-2">Parent Profile</h1>
-            <p className="text-white/80 text-sm">Monitor {parentData.childName}'s progress</p>
+            <h1 className="text-2xl font-bold text-white mb-2">Hello, {parentName}!</h1>
+            <p className="text-white/80 text-sm">Monitor {kidName}'s progress</p>
           </div>
         </header>
 
@@ -174,10 +176,10 @@ export default function ParentProfile() {
 
       <BottomNavigation
         items={[
-          { href: "/parent-app", icon: "/BPI assets/beige-home.png", label: "Dashboard" },
-          { href: "/parent-app/tasks", icon: "/BPI assets/beige-piggy-bank.png", label: "Tasks" },
-          { href: "/parent-app/settings", icon: "/BPI assets/beige-star.png", label: "Settings" },
-          { href: "/parent-app/profile", icon: "/BPI assets/beige-home.png", label: "Profile", isActive: true }
+          { href: "/parent-app", icon: "/BPI assets/beige-home.png", label: "Home", isActive: true },
+          { href: "/parent-app/monitor", icon: "/BPI assets/list.png", label: "Monitor" },
+          { href: "/parent-app/rewards", icon: "/BPI assets/beige-piggy-bank.png", label: "Rewards" },
+          { href: "/parent-app/profile", icon: "/BPI assets/beige-home.png", label: "Profile" }
         ]}
       />
     </div>

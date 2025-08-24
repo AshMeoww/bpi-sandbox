@@ -8,6 +8,7 @@ import Logo from "../../../components/shared/Logo";
 import Image from "next/image";
 
 export default function Dashboard() {
+  const [kidName] = useState("Alex");
   const [balance, setBalance] = useState(50.0);
   const [level] = useState(3);
   const [xp] = useState(250);
@@ -42,7 +43,7 @@ export default function Dashboard() {
           </div>
           <div className=" sm:p-2 mb-4 sm:mb-1">
             <h1 className="text-3xl sm:text-5xl  text-black mb-2 tracking-tight text-left font-['Baloo_2'] font-extrabold">
-              Hi, Kid!{" "}
+              Hi, {kidName}!{" "}
             </h1>
           </div>
           <BalanceCard balance={balance} />
