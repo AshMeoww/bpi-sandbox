@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import BottomNavigation from "../../../components/shared/BottomNavigation";
+import Logo from "../../../components/shared/Logo";
 
 export default function ParentProfile() {
   const [email, setEmail] = useState("");
@@ -46,9 +47,9 @@ export default function ParentProfile() {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 p-4 pb-20">
       <div className="max-w-md mx-auto">
         <header className="mb-6">
-          <Link href="/parent-app" className="w-10 h-10 bg-white rounded-full flex items-center justify-center mb-4">
-            <div className="w-6 h-6 bg-blue-600 rounded-full"></div>
-          </Link>
+          <div className="mb-4">
+            <Logo />
+          </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4">
             <h1 className="text-2xl font-bold text-white mb-2">Parent Profile</h1>
             <p className="text-white/80 text-sm">Monitor {parentData.childName}'s progress</p>

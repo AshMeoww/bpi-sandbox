@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { TaskStore, Task } from "../../lib/taskStore";
 import BottomNavigation from "../../components/shared/BottomNavigation";
+import Logo from "../../components/shared/Logo";
 
 type Transaction = {
   id: number;
@@ -69,10 +70,7 @@ export default function ParentDashboard() {
       <div className="max-w-md mx-auto">
         <header className="mb-6 sm:mb-8">
           <div className="flex justify-between items-center mb-4 sm:mb-6">
-            <Link href="/" className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center">
-              {/* [PARENT_DASHBOARD_ICON_PLACEHOLDER] */}
-              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-blue-600 rounded-full"></div>
-            </Link>
+            <Logo />
             <Link href="/kid/dashboard" className="bg-white/20 backdrop-blur-sm text-white px-3 py-2 sm:px-6 sm:py-3 rounded-xl sm:rounded-2xl hover:bg-white/30 transition-all font-medium text-sm sm:text-base">
               Kid's View
             </Link>

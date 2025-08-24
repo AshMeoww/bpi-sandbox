@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import BottomNavigation from "../../../components/shared/BottomNavigation";
+import Logo from "../../../components/shared/Logo";
 import Image from "next/image";
 
 export default function Wishlist() {
@@ -36,12 +37,7 @@ export default function Wishlist() {
         {/* Header */}
         <header className="text-center mb-6">
           <div className="flex justify-between items-center mb-4">
-            <Link
-              href="/"
-              className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg"
-            >
-              <div className="w-6 h-6 bg-purple-500 rounded-full"></div>
-            </Link>
+            <Logo />
             <Link
               href="/parent-app"
               className="bg-white/20 backdrop-blur-sm text-white px-3 py-2 rounded-full hover:bg-white/30 transition-all text-xs font-medium"

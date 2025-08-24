@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { TaskStore, Task as AssignedTask } from "../../../lib/taskStore";
 import BottomNavigation from "../../../components/shared/BottomNavigation";
+import Logo from "../../../components/shared/Logo";
 import Image from "next/image";
 
 type Task = {
@@ -82,9 +83,7 @@ export default function Tasks() {
       <div className="max-w-md mx-auto p-4">
         <header className="text-center mb-6">
           <div className="flex justify-between items-center mb-4">
-            <Link href="/" className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg">
-              <div className="w-6 h-6 bg-green-500 rounded-full"></div>
-            </Link>
+            <Logo />
             <div className="bg-white/20 backdrop-blur-sm text-white px-3 py-2 rounded-full text-sm font-bold">
               Earned: ₱{totalEarned}
             </div>
@@ -100,13 +99,13 @@ export default function Tasks() {
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4 flex-1">
                 <div className="relative z-10">
-                  <h3 className="font-bold text-gray-800 text-2xl">Sweep floor</h3>
-                  <p className="text-sm text-gray-600">Sweep the entire floor of your room</p>
+                  <h3 className="font-semibold font-['Baloo_2'] text-gray-800 text-2xl">Sweep floor</h3>
+                  <p className="text-sm text-gray-600 font['Public_Sans']">Sweep the entire floor of your room</p>
                   <div className="flex items-center space-x-2 mt-2">
                     <span className="px-3 py-1 rounded-full text-xs font-bold bg-green-500 text-white">
                       DAILY
                     </span>
-                    <span className="text-green-600 font-bold">Earn: ₱200</span>
+                    <span className="text-green-600 font-['Public_Sans']">Earn: ₱200</span>
                   </div>
                 </div>
               </div>

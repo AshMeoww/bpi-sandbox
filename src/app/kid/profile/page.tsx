@@ -3,6 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import BottomNavigation from "../../../components/shared/BottomNavigation";
+import Logo from "../../../components/shared/Logo";
 
 export default function Profile() {
   const [email, setEmail] = useState("");
@@ -72,20 +73,7 @@ export default function Profile() {
       <div className="max-w-md mx-auto">
       <header className="text-center mb-6 sm:mb-8">
           <div className="flex justify-between items-center mb-4 sm:mb-6">
-            <Link
-              href="/"
-              className="flex items-center justify-center"
-            >
-              <div className="w-32 h-16 sm:w-40 sm:h-20">
-                <Image 
-                src="/BPI assets/sandbox name w logo.png" 
-                alt="BPI Logo" 
-                width={180}
-                height={100}
-                className="object-contain"
-                />
-              </div>
-            </Link>
+            <Logo />
             <Link
               href="/parent-app"
               className="bg-white/20 backdrop-blur-sm text-white px-3 py-2 sm:px-4 sm:py-2 rounded-full hover:bg-white/30 transition-all text-xs sm:text-sm font-medium"
