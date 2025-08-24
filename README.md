@@ -1,100 +1,85 @@
-BPI Sandbox — Financial Learning App
+BPI Sandbox — Datawave 2025
 
-Building the future of financial inclusion — one child at a time.
+Financial literacy starts young — building the next generation of empowered savers.
 
-BPI Sandbox is a gamified financial learning app designed for Filipino children aged 7–14, with a parallel parent-facing interface for guidance and oversight. The app simulates earning, saving, spending, and learning in a safe digital environment, preparing kids for future products like BPI Jumpstart and fostering lifelong financial literacy.
+BPI Sandbox is a gamified financial learning app designed for Filipino children aged 7–14. The platform simulates a child-friendly banking experience where kids can earn, save, spend, and learn within a guided environment, while parents monitor progress and assign tasks.
 
-This project is our official submission for BPI Datawave 2025, under Track 2: ESG+E2 — Financial Inclusion & Sustainable Business Growth.
+Our Datawave 2025 submission demonstrates how gamification and dual interfaces can bridge the gap between early financial education and formal banking products like BPI Jumpstart.
 
 Team: Orion
 
-Ian Vergara — iamvergsuu@gmail.com
+Ian Vergara - iamvergsuu@gmail.com
 
-Jasmyn Japag — japag.jasmyn@gmail.com
+Jasmyn Japag - japag.jasmyn@gmail.com
 
-Ashley Nicole Santos — ashleynicole.dsantos@gmail.com
+Ashley Nicole Santos - ashleynicole.dsantos@gmail.com
 
-Phoebe Mozo — mozophoebe0621@gmail.com
+Phoebe Mozo - mozophoebe0621@gmail.com
 
 Problem Statement
 
-Millions of Filipino children grow up without exposure to financial education or safe banking experiences. By adulthood, many are unprepared to manage savings, budgeting, or borrowing responsibly.
+In the Philippines, millions of children grow up without early exposure to financial literacy or banking experiences. By the time they reach adulthood, many are unprepared to manage savings, budgeting, or borrowing responsibly.
 
-While BPI Jumpstart supports teens, there is a missing bridge for children aged 7–14, a formative stage when lifelong money habits are developed. Families in underbanked communities face even more barriers, resulting in generational financial exclusion.
+While BPI Jumpstart provides banking tools for teens, there is a missing bridge for children aged 7–14—a critical stage where habits are formed. Without guided learning, families in underbanked communities are unable to expose children to responsible money management early on, perpetuating cycles of financial exclusion.
 
 Solution: BPI Sandbox
 
-BPI Sandbox provides a dual-interface digital playground:
+Sandbox provides a financial playground where children can experience earning, saving, and spending in a safe, gamified environment. Parents play an active role by assigning tasks, monitoring progress, and reinforcing financial habits.
 
-For kids: a gamified platform to complete tasks, set goals, and learn financial basics.
+Core Features
 
-For parents: a monitoring and task-assignment dashboard that encourages involvement in their child’s financial education.
+Dual Interface – Separate optimized experiences for kids and parents
 
-The prototype demonstrates how gamification and family engagement can build strong foundations for early financial literacy and inclusion.
+Task Delegation – Parents assign chores or missions, kids complete and track rewards
 
-Core Features (Prototype)
+Savings Goals – Children set goals and visualize progress toward them
 
-Dual interface for child and parent users
+Gamified Learning – Badges, levels, and interactive learning cards
 
-Task assignment and completion flow
-
-Savings goal tracking and progress visualization
-
-Gamified learning experience with cards, quizzes, and badges
-
-Mobile-first design with touch-friendly navigation
-
-Future Vision (Track Alignment)
-
-While the prototype focuses on the user journey, BPI Sandbox is designed to evolve into a fully track-aligned solution under Track 2: ESG+E2 — Financial Inclusion & Sustainable Business Growth:
-
-Agentic AI for Personalized Learning: Adaptive financial guidance tailored to each child’s behavior and goals.
-
-Inclusion Metrics: Tools to identify and target underbanked communities most in need of early financial literacy.
-
-Ethical Microfinance Pathways: Transition older users into entry-level accounts or microfinance opportunities.
-
-ESG-Linked Education: Modules that introduce sustainable finance concepts, helping families understand responsible financial choices.
+Mobile-First Design – Simple, touch-friendly navigation for kids
 
 Target Audience
 
 Primary Users
 
-Children (Ages 7–14): Build saving and spending habits in a guided, gamified environment.
+Children (Ages 7–14): Build saving and spending habits in a guided, gamified environment
 
-Secondary Users
+Parents/Guardians: Monitor activity, assign tasks, and track progress
 
-Parents/Guardians: Provide oversight, assign tasks, and track progress.
+Secondary Users (Future)
 
-Schools and LGUs (Future Phase): Deploy Sandbox in literacy campaigns and community programs.
+Schools & LGUs: Integrate Sandbox into financial literacy campaigns and community education initiatives
 
-Technology Stack
+Future Vision (Track Alignment)
 
-Next.js, React, TypeScript, Tailwind CSS
+BPI Sandbox is built as a foundation for Track 2: ESG+E2 — Financial Inclusion & Sustainable Business Growth. Future development will align with hackathon goals through:
 
+Agentic AI for personalized financial guidance tailored to each child’s behavior
 
-Installation
+Inclusion metrics to identify underbanked families and communities most in need
 
-Clone the repository:
+Ethical microfinance pathways for teens transitioning from the simulation to real accounts
 
-git clone https://github.com/orion-team/sandbox.git
-cd sandbox
+ESG-linked financial literacy modules introducing concepts of sustainable finance and responsible decision-making
 
-Frontend Setup
-cd frontend
-npm install
-npm run dev
+Key Success Metrics
 
-Open in your browser at:
+Engagement: Frequency of logins, task completion, savings goal tracking
 
-http://localhost:3000/
+Learning Retention: Quiz scores, concept mastery, badge unlocks
 
-About BPI Datawave 2025
+Parental Adoption: % of parents assigning tasks and reviewing reports
 
-BPI Datawave is an innovation hackathon hosted by the Bank of the Philippine Islands (BPI) in partnership with Eskwelabs, focused on using AI and digital innovation to advance financial inclusion and sustainability.
+Inclusion Reach: % of users from public schools or underbanked areas
 
-BPI Sandbox is our submission for Track 2: ESG+E2 — Financial Inclusion & Sustainable Business Growth, showcasing how gamified financial education can help underbanked communities and prepare the next generation of financially literate Filipinos.
+Pathway to Jumpstart: Number of children transitioning to actual BPI accounts
 
-Contact
+About Datawave 2025
 
-For questions about this project, reach out to any of the team members listed above.
+BPI Datawave is an innovation hackathon hosted by the Bank of the Philippine Islands (BPI) in partnership with Eskwelabs, focusing on AI and digital solutions for financial inclusion and sustainable growth.
+
+BPI Sandbox is Team Orion’s submission for Track 2: ESG+E2 — Financial Inclusion & Sustainable Business Growth, showcasing how gamification and family engagement can prepare the next generation of Filipinos for financial empowerment.
+
+Repository Structure
+
+/frontend - Next.js, React, TypeScript, Tailwind CSS
