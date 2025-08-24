@@ -6,9 +6,10 @@ export type UserData = {
 
 export const UserStore = {
   getUserData: (): UserData => {
-    if (typeof window === 'undefined') return { nickname: "Alex", avatar: "/BPI assets/avatars/Girl w yellow bg.png", role: "kid" };
+    const defaultData = { nickname: "Alex", avatar: "/BPI assets/avatars/Girl w yellow bg.png", role: "kid" as const };
+    if (typeof window === 'undefined') return defaultData;
     const userData = localStorage.getItem('sandbox-user');
-    return userData ? JSON.parse(userData) : { nickname: "Alex", avatar: "/BPI assets/avatars/Girl w yellow bg.png", role: "kid" };
+    return userData ? JSON.parse(userData) : defaultData;
   },
 
   saveUserData: (userData: UserData) => {
