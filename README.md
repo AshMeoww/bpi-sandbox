@@ -6,6 +6,7 @@ BPI Sandbox is a gamified financial learning app designed for Filipino children 
 
 Our Datawave 2025 submission demonstrates how gamification and dual interfaces can bridge the gap between early financial education and formal banking products like BPI Jumpstart.
 
+
 Team: Orion
 
 Ian Vergara - iamvergsuu@gmail.com
@@ -16,6 +17,7 @@ Ashley Nicole Santos - ashleynicole.dsantos@gmail.com
 
 Phoebe Mozo - mozophoebe0621@gmail.com
 
+
 **Problem Statement**
 
 In the Philippines, millions of children grow up without early exposure to financial literacy or banking experiences. By the time they reach adulthood, many are unprepared to manage savings, budgeting, or borrowing responsibly.
@@ -25,6 +27,7 @@ While BPI Jumpstart provides banking tools for teens, there is a missing bridge 
 **Solution: BPI Sandbox**
 
 Sandbox provides a financial playground where children can experience earning, saving, and spending in a safe, gamified environment. Parents play an active role by assigning tasks, monitoring progress, and reinforcing financial habits.
+
 
 **Core Features**
 
@@ -37,6 +40,7 @@ Savings Goals – Children set goals and visualize progress toward them
 Gamified Learning – Badges, levels, and interactive learning cards
 
 Mobile-First Design – Simple, touch-friendly navigation for kids
+
 
 **Target Audience**
 
@@ -62,6 +66,7 @@ Ethical microfinance pathways for teens transitioning from the simulation to rea
 
 ESG-linked financial literacy modules introducing concepts of sustainable finance and responsible decision-making
 
+
 **Key Success Metrics**
 
 Engagement: Frequency of logins, task completion, savings goal tracking
@@ -74,6 +79,7 @@ Inclusion Reach: % of users from public schools or underbanked areas
 
 Pathway to Jumpstart: Number of children transitioning to actual BPI accounts
 
+
 **About Datawave 2025**
 
 BPI Datawave is an innovation hackathon hosted by the Bank of the Philippine Islands (BPI) in partnership with Eskwelabs, focusing on AI and digital solutions for financial inclusion and sustainable growth.
@@ -82,4 +88,4 @@ BPI Sandbox is Team Orion’s submission for Track 2: ESG+E2 — Financial Inclu
 
 Repository Structure
 
-/frontend - Next.js, React, TypeScript, Tailwind CSS
+/sandbox - Next.js, React, TypeScript, Tailwind CSS
