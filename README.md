@@ -71,14 +71,15 @@ BPI Sandbox is built as a foundation for **Track 2: ESG+E2 — Financial Inclusi
 ---
 
 ## Repository Structure
-- `/frontend` — Next.js, React, TypeScript, Tailwind CSS  
-- `/backend` — Express.js server  
-- `/docs` — Project documentation and hackathon deliverables  
+- `/sandbox` — Next.js, React, TypeScript, Tailwind CSS  
+    
 
 ---
 
 ## Installation
 Clone the repository:  
 ```bash
-git clone https://github.com/orion-team/sandbox.git
+git clone https://github.com/AshMeoww/bpi-sandbox.git
 cd sandbox
+npm run dev
+
